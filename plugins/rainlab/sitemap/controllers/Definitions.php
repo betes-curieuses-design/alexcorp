@@ -52,13 +52,6 @@ class Definitions extends Controller
         }
     }
 
-    protected function redirectToThemeSitemap($theme)
-    {
-        $model = Definition::firstOrCreate(['theme' => $theme->getDirName()]);
-        $updateUrl = sprintf('rainlab/sitemap/definitions/update/%s', $model->getKey());
-        return Backend::redirect($updateUrl);
-    }
-
     /**
      * Update action. Add the theme object to the page vars.
      */
@@ -93,10 +86,6 @@ class Definitions extends Controller
         }
     }
 
-    //
-    // Helpers
-    //
-
     public function onGetItemTypeInfo()
     {
         $type = Request::input('type');
@@ -104,5 +93,16 @@ class Definitions extends Controller
         return [
             'sitemapItemTypeInfo' => SitemapItem::getTypeInfo($type)
         ];
+    }
+
+    //
+    // Helpers
+    //
+
+    protected function redirectToThemeSitemap($theme)
+    {
+        $model = Definition::firstOrCreate(['theme' => $theme->getDirName()]);
+        $updateUrl = sprintf('rainlab/sitemap/definitions/update/%s', $model->getKey());
+        return Backend::redirect($updateUrl);
     }
 }

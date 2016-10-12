@@ -12,15 +12,19 @@ use Backend\Classes\FormWidgetBase;
  */
 class SitemapItems extends FormWidgetBase
 {
-    public $referenceRequiredMessage = 'rainlab.sitemap::lang.item.reference_required';
-    public $urlRequiredMessage = 'rainlab.sitemap::lang.item.url_required';
-    public $cmsPageRequiredMessage = 'rainlab.sitemap::lang.item.cms_page_required';
     protected $typeListCache = false;
     protected $typeInfoCache = [];
+
     /**
      * {@inheritDoc}
      */
     protected $defaultAlias = 'sitemapitems';
+
+    public $referenceRequiredMessage = 'rainlab.sitemap::lang.item.reference_required';
+
+    public $urlRequiredMessage = 'rainlab.sitemap::lang.item.url_required';
+
+    public $cmsPageRequiredMessage = 'rainlab.sitemap::lang.item.cms_page_required';
 
     /**
      * {@inheritDoc}
@@ -66,17 +70,17 @@ class SitemapItems extends FormWidgetBase
     /**
      * {@inheritDoc}
      */
-    public function getSaveValue($value)
+    protected function loadAssets()
     {
-        return post('itemData');
+        $this->addJs('js/sitemap-items-editor.js', 'core');
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function loadAssets()
+    public function getSaveValue($value)
     {
-        $this->addJs('js/sitemap-items-editor.js', 'core');
+        return post('itemData');
     }
 
     //

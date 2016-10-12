@@ -1,0 +1,42 @@
+title = "Home"
+url = "/"
+layout = "default"
+description = "Home Page"
+meta_description = "Free business HTML theme fromm ShapeBootstrap, converted for OctoberCMS"
+is_hidden = 0
+
+[Worklist]
+
+[Testimonials]
+==
+<section id="main-slider" class="no-margin">
+	{% partial "carousel" %}
+    <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+        <i class="fa fa-chevron-left"></i>
+    </a>
+    <a class="next hidden-xs" href="#main-slider" data-slide="next">
+        <i class="fa fa-chevron-right"></i>
+    </a>
+</section>
+
+<section id="feature">
+	{% partial "features" %}
+</section>
+
+<section id="services" class="service-item">
+    {% partial "services" %}
+</section>
+
+<section id="recent-works">
+	<div class="container">
+            <div class="center wow fadeInDown">
+                <h2>Recent Works</h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+{% component 'Worklist' %}
+        </div><!--/.container-->
+</section>
+
+<section id="testimonial">
+            {% component 'Testimonials' %}
+</section>

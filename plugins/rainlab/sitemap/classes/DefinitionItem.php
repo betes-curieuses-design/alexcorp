@@ -95,40 +95,6 @@ class DefinitionItem
         return new Collection($result);
     }
 
-    public static function getTypeInfo($type)
-    {
-        $result = [];
-        $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
-        if (is_array($apiResult)) {
-            foreach ($apiResult as $typeInfo) {
-                if (!is_array($typeInfo))
-                    continue;
-
-                foreach ($typeInfo as $name=>$value) {
-                    if ($name == 'cmsPages') {
-                        $cmsPages = [];
-
-                        foreach ($value as $page) {
-                            $baseName = $page->getBaseFileName();
-                            $pos = strrpos ($baseName, '/');
-
-                            $dir = $pos !== false ? substr($baseName, 0, $pos).' / ' : null;
-                            $cmsPages[$baseName] = strlen($page->title)
-                                ? $dir.$page->title
-                                : $baseName;
-                        }
-
-                        $value = $cmsPages;
-                    }
-
-                    $result[$name] = $value;
-                }
-            }
-        }
-
-        return $result;
-    }
-
     /**
      * Returns a list of registered item types
      * @return array Returns an array of registered item types
@@ -161,6 +127,40 @@ class DefinitionItem
     public function getReferenceOptions($keyValue = null)
     {
         return []; // References are loaded client-side
+    }
+
+    public static function getTypeInfo($type)
+    {
+        $result = [];
+        $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
+        if (is_array($apiResult)) {
+            foreach ($apiResult as $typeInfo) {
+                if (!is_array($typeInfo))
+                    continue;
+
+                foreach ($typeInfo as $name=>$value) {
+                    if ($name == 'cmsPages') {
+                        $cmsPages = [];
+
+                        foreach ($value as $page) {
+                            $baseName = $page->getBaseFileName();
+                            $pos = strrpos ($baseName, '/');
+
+                            $dir = $pos !== false ? substr($baseName, 0, $pos).' / ' : null;
+                            $cmsPages[$baseName] = strlen($page->title)
+                                ? $dir.$page->title
+                                : $baseName;
+                        }
+
+                        $value = $cmsPages;
+                    }
+
+                    $result[$name] = $value;
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**

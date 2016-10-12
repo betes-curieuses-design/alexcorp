@@ -1,0 +1,27 @@
+1476237111a:1:{s:10:"footer.htm";a:5:{s:8:"fileName";s:10:"footer.htm";s:7:"content";s:607:"    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                &copy; Alexandre Foisy, 2012 - {{ "now"|date("Y") }}
+            </div>
+            <div class="col-sm-4">
+                <ul class="pull-right">
+                    <li>Me suivre sur :</li>
+                    <li><a href="https://www.facebook.com/AfoisyGraphiste" target="new" class="fa solo fa-facebook"></a></li>
+                    <li><a href="http://pinterest.com/alexfoisy/" target="new" class="fa solo fa-pinterest"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>";s:5:"mtime";i:1476028383;s:6:"markup";s:603:"<div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                &copy; Alexandre Foisy, 2012 - {{ "now"|date("Y") }}
+            </div>
+            <div class="col-sm-4">
+                <ul class="pull-right">
+                    <li>Me suivre sur :</li>
+                    <li><a href="https://www.facebook.com/AfoisyGraphiste" target="new" class="fa solo fa-facebook"></a></li>
+                    <li><a href="http://pinterest.com/alexfoisy/" target="new" class="fa solo fa-pinterest"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>";s:4:"code";N;}}

@@ -28,27 +28,33 @@ class Definition extends Model
      * @var string The database table used by the model.
      */
     public $table = 'rainlab_sitemap_definitions';
+
+    /**
+     * @var array Guarded fields
+     */
+    protected $guarded = [];
+
+    /**
+     * @var array Fillable fields
+     */
+    protected $fillable = [];
+
+    /**
+     * @var integer A tally of URLs added to the sitemap
+     */
+    protected $urlCount = 0;
+
+    /**
+     * @var array List of attribute names which are json encoded and decoded from the database.
+     */
+    protected $jsonable = ['data'];
+
     /**
      * @var array The sitemap items.
      * Items are objects of the \RainLab\Sitemap\Classes\DefinitionItem class.
      */
     public $items;
-    /**
-     * @var array Guarded fields
-     */
-    protected $guarded = [];
-    /**
-     * @var array Fillable fields
-     */
-    protected $fillable = [];
-    /**
-     * @var integer A tally of URLs added to the sitemap
-     */
-    protected $urlCount = 0;
-    /**
-     * @var array List of attribute names which are json encoded and decoded from the database.
-     */
-    protected $jsonable = ['data'];
+
     /**
      * @var DOMDocument element
      */
@@ -142,30 +148,6 @@ class Definition extends Model
         return $xml->saveXML();
     }
 
-    protected function addItemToSet($item, $url, $mtime = null)
-    {
-        if ($mtime instanceof \DateTime)
-            $mtime = $mtime->getTimestamp();
-
-        $xml = $this->makeXmlObject();
-        $urlSet = $this->makeUrlSet();
-        $mtime = $mtime ? date('c', $mtime) : date('c');
-
-        $urlElement = $this->makeUrlElement(
-            $xml,
-            $url,
-            $mtime,
-            $item->changefreq,
-            $item->priority
-        );
-
-        if ($urlElement) {
-            $urlSet->appendChild($urlElement);
-        }
-
-        return $urlSet;
-    }
-
     protected function makeXmlObject()
     {
         if ($this->xmlObject !== null)
@@ -189,6 +171,30 @@ class Definition extends Model
         $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 
         return $this->urlSet = $urlSet;
+    }
+
+    protected function addItemToSet($item, $url, $mtime = null)
+    {
+        if ($mtime instanceof \DateTime)
+            $mtime = $mtime->getTimestamp();
+
+        $xml = $this->makeXmlObject();
+        $urlSet = $this->makeUrlSet();
+        $mtime = $mtime ? date('c', $mtime) : date('c');
+
+        $urlElement = $this->makeUrlElement(
+            $xml,
+            $url,
+            $mtime,
+            $item->changefreq,
+            $item->priority
+        );
+
+        if ($urlElement) {
+            $urlSet->appendChild($urlElement);
+        }
+
+        return $urlSet;
     }
 
     protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority)

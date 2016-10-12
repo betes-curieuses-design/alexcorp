@@ -1,0 +1,72 @@
+1476316111a:1:{s:8:"home.htm";a:13:{s:8:"fileName";s:8:"home.htm";s:7:"content";s:1215:"title = "Home"
+url = "/"
+layout = "default"
+description = "Home Page"
+meta_description = "Free business HTML theme fromm ShapeBootstrap, converted for OctoberCMS"
+is_hidden = 0
+
+[Worklist]
+
+[Testimonials]
+==
+<section id="main-slider" class="no-margin">
+	{% partial "carousel" %}
+    <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+        <i class="fa fa-chevron-left"></i>
+    </a>
+    <a class="next hidden-xs" href="#main-slider" data-slide="next">
+        <i class="fa fa-chevron-right"></i>
+    </a>
+</section>
+
+<section id="feature">
+	{% partial "features" %}
+</section>
+
+<section id="services" class="service-item">
+    {% partial "services" %}
+</section>
+
+<section id="recent-works">
+	<div class="container">
+            <div class="center wow fadeInDown">
+                <h2>Recent Works</h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+{% component 'Worklist' %}
+        </div><!--/.container-->
+</section>
+
+<section id="testimonial">
+            {% component 'Testimonials' %}
+</section>";s:5:"mtime";i:1476235363;s:6:"markup";s:996:"<section id="main-slider" class="no-margin">
+	{% partial "carousel" %}
+    <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+        <i class="fa fa-chevron-left"></i>
+    </a>
+    <a class="next hidden-xs" href="#main-slider" data-slide="next">
+        <i class="fa fa-chevron-right"></i>
+    </a>
+</section>
+
+<section id="feature">
+	{% partial "features" %}
+</section>
+
+<section id="services" class="service-item">
+    {% partial "services" %}
+</section>
+
+<section id="recent-works">
+	<div class="container">
+            <div class="center wow fadeInDown">
+                <h2>Recent Works</h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+{% component 'Worklist' %}
+        </div><!--/.container-->
+</section>
+
+<section id="testimonial">
+            {% component 'Testimonials' %}
+</section>";s:4:"code";N;s:5:"title";s:4:"Home";s:3:"url";s:1:"/";s:6:"layout";s:7:"default";s:11:"description";s:9:"Home Page";s:16:"meta_description";s:71:"Free business HTML theme fromm ShapeBootstrap, converted for OctoberCMS";s:9:"is_hidden";s:1:"0";s:8:"Worklist";a:0:{}s:12:"Testimonials";a:0:{}}}
