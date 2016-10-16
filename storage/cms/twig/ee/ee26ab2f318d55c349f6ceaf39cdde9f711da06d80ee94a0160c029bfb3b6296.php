@@ -46,21 +46,9 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
         // line 19
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/favicon.ico");
         echo "\">
-    <link rel=\"apple-touch-icon-precomposed\" sizes=\"144x144\" href=\"";
-        // line 20
-        echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-144-precomposed.png");
-        echo "\">
-    <link rel=\"apple-touch-icon-precomposed\" sizes=\"114x114\" href=\"";
-        // line 21
-        echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-114-precomposed.png");
-        echo "\">
-    <link rel=\"apple-touch-icon-precomposed\" sizes=\"72x72\" href=\"";
-        // line 22
-        echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-72-precomposed.png");
-        echo "\">
     <link rel=\"apple-touch-icon-precomposed\" href=\"";
-        // line 23
-        echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-57-precomposed.png");
+        // line 20
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-precomposed.png");
         echo "\">
 </head><!--/head-->
 
@@ -68,17 +56,17 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 
 <header id=\"header\">
         ";
-        // line 29
+        // line 26
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("nav"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 30
+        // line 27
         echo "</header><!--/header-->
 
     ";
-        // line 32
+        // line 29
         echo $this->env->getExtension('CMS')->pageFunction();
-        // line 33
+        // line 30
         echo "
 <!--Contact form-->
 <section id=\"_contact\">
@@ -88,11 +76,11 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
                 <div class=\"widget\">
                     <h3 class=\"text-center\">Allons prendre un café</h3>
                     ";
-        // line 41
+        // line 38
         $context['__cms_component_params'] = [];
         echo $this->env->getExtension('CMS')->componentFunction("simpleContact"        , $context['__cms_component_params']        );
         unset($context['__cms_component_params']);
-        // line 42
+        // line 39
         echo "                </div>
             </div>
         </div>
@@ -101,41 +89,41 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 
 <footer id=\"footer\">
 \t";
-        // line 49
+        // line 46
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("footer"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 50
+        // line 47
         echo "</footer><!--/#footer-->
 <a id=\"scrollUp\" href=\"#_home\" title=\"Retour vers le haut de la page\"><i class=\"fa fa-arrow-up\" aria-hidden=\"true\"></i></a>
 
 <!-- Scripts -->
 <script type=\"text/javascript\" src=\"";
-        // line 54
+        // line 51
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/html5shiv.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 55
+        // line 52
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/respond.min.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 56
+        // line 53
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/jquery.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 57
+        // line 54
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/bootstrap.min.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 58
+        // line 55
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/jquery.isotope.min.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 59
+        // line 56
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/main.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 60
+        // line 57
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/wow.min.js");
         echo "\"></script>
 <script>
@@ -156,14 +144,14 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
     });
     </script>
 ";
-        // line 78
+        // line 75
         echo '<script src="'. Request::getBasePath()
                 .'/modules/system/assets/js/framework.js"></script>'.PHP_EOL;
         echo '<script src="'. Request::getBasePath()
                     .'/modules/system/assets/js/framework.extras.js"></script>'.PHP_EOL;
         echo '<link rel="stylesheet" property="stylesheet" href="'. Request::getBasePath()
                     .'/modules/system/assets/css/framework.extras.css">'.PHP_EOL;
-        // line 79
+        // line 76
         echo $this->env->getExtension('CMS')->assetsFunction('js');
         echo $this->env->getExtension('CMS')->displayBlock('scripts');
         echo "             
@@ -184,7 +172,7 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 
     public function getDebugInfo()
     {
-        return array (  167 => 79,  160 => 78,  139 => 60,  135 => 59,  131 => 58,  127 => 57,  123 => 56,  119 => 55,  115 => 54,  109 => 50,  105 => 49,  96 => 42,  92 => 41,  82 => 33,  80 => 32,  76 => 30,  72 => 29,  63 => 23,  59 => 22,  55 => 21,  51 => 20,  47 => 19,  44 => 18,  41 => 13,  38 => 12,  32 => 9,  27 => 7,  19 => 1,);
+        return array (  155 => 76,  148 => 75,  127 => 57,  123 => 56,  119 => 55,  115 => 54,  111 => 53,  107 => 52,  103 => 51,  97 => 47,  93 => 46,  84 => 39,  80 => 38,  70 => 30,  68 => 29,  64 => 27,  60 => 26,  51 => 20,  47 => 19,  44 => 18,  41 => 13,  38 => 12,  32 => 9,  27 => 7,  19 => 1,);
     }
 }
 /* <!DOCTYPE html>*/
@@ -206,10 +194,7 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 /* 		'assets/css/responsive.css',*/
 /* 	]|theme }}" rel="stylesheet">*/
 /*     <link rel="shortcut icon" href="{{ 'assets/images/ico/favicon.ico'|theme }}">*/
-/*     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ 'assets/images/ico/apple-touch-icon-144-precomposed.png'|theme }}">*/
-/*     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ 'assets/images/ico/apple-touch-icon-114-precomposed.png'|theme }}">*/
-/*     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ 'assets/images/ico/apple-touch-icon-72-precomposed.png'|theme }}">*/
-/*     <link rel="apple-touch-icon-precomposed" href="{{ 'assets/images/ico/apple-touch-icon-57-precomposed.png'|theme }}">*/
+/*     <link rel="apple-touch-icon-precomposed" href="{{ 'assets/images/ico/apple-touch-icon-precomposed.png'|theme }}">*/
 /* </head><!--/head-->*/
 /* */
 /* <body class="homepage">*/

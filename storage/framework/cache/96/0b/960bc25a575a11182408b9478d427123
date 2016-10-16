@@ -1,4 +1,4 @@
-1476636491a:1:{s:23:"Worklist/workdetail.htm";a:5:{s:8:"fileName";s:23:"Worklist/workdetail.htm";s:7:"content";s:920:"{% set work = __SELF__.work %}
+1476651746a:1:{s:23:"Worklist/workdetail.htm";a:5:{s:8:"fileName";s:23:"Worklist/workdetail.htm";s:7:"content";s:920:"{% set work = __SELF__.work %}
 <div class="work-background">
     <div class="work-info">
         <img src="{{ 'plugins/individuart/work/assets/images/btn-close.svg'}}" class="work-close">
