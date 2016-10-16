@@ -25,7 +25,7 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
                         <div id=\"content-box\">
                             <h2>Je carbure à la caféine,
                                 voici mes compétences</h2>
-                            <div class=\"table-responsive\">
+                            <div class=\"top-buffer\">
                             <table class=\"table\">
                                 <tr>
                                     <td>Photoshop CS6</td>
@@ -74,22 +74,22 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
         echo "\"></td>
                                 </tr>
                                 <tr>
-                                    <td>Acrobat Pro 10</td>
+                                    <td>Affinity Designer</td>
                                     <td><img src=\"";
         // line 27
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
-        echo "\">  <img src=\"";
+        echo "\"> <img src=\"";
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
-        echo "\">  <img src=\"";
+        echo "\"> <img src=\"";
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
-        echo "\">  <img src=\"";
-        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
-        echo "\">  <img src=\"";
+        echo "\"> <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_minus.png");
+        echo "\"> <img src=\"";
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_minus.png");
         echo "\"></td>
                                 </tr>
                                 <tr>
-                                    <td>QuarkXPress 7</td>
+                                    <td>Affinity Photo</td>
                                     <td><img src=\"";
         // line 31
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
@@ -104,9 +104,39 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
         echo "\"></td>
                                 </tr>
                                 <tr>
-                                    <td>HTML5/CSS3</td>
+                                    <td>Acrobat Pro 10</td>
                                     <td><img src=\"";
         // line 35
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
+        echo "\">  <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
+        echo "\">  <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
+        echo "\">  <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
+        echo "\">  <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_minus.png");
+        echo "\"></td>
+                                </tr>
+                                <tr>
+                                    <td>QuarkXPress 7</td>
+                                    <td><img src=\"";
+        // line 39
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
+        echo "\"> <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
+        echo "\"> <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
+        echo "\"> <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_minus.png");
+        echo "\"> <img src=\"";
+        echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_minus.png");
+        echo "\"></td>
+                                </tr>
+                                <tr>
+                                    <td>HTML5/CSS3</td>
+                                    <td><img src=\"";
+        // line 43
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
         echo "\"> <img src=\"";
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
@@ -119,9 +149,9 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
         echo "\"></td>
                                 </tr>
                                 <tr>
-                                    <td>OctoberCMS Framework</td>
+                                    <td>OctoberCMS</td>
                                     <td><img src=\"";
-        // line 39
+        // line 47
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
         echo "\"> <img src=\"";
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
@@ -136,7 +166,7 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
                                 <tr>
                                     <td>Esko Artwork</td>
                                     <td><img src=\"";
-        // line 43
+        // line 51
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
         echo "\"> <img src=\"";
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
@@ -151,7 +181,7 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
                                 <tr>
                                     <td>Suite Office 2011</td>
                                     <td><img src=\"";
-        // line 47
+        // line 55
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
         echo "\"> <img src=\"";
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/apple_full.png");
@@ -185,7 +215,7 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
 
     public function getDebugInfo()
     {
-        return array (  155 => 47,  140 => 43,  125 => 39,  110 => 35,  95 => 31,  80 => 27,  65 => 23,  50 => 19,  35 => 15,  19 => 1,);
+        return array (  185 => 55,  170 => 51,  155 => 47,  140 => 43,  125 => 39,  110 => 35,  95 => 31,  80 => 27,  65 => 23,  50 => 19,  35 => 15,  19 => 1,);
     }
 }
 /* <div class="container">*/
@@ -197,7 +227,7 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
 /*                         <div id="content-box">*/
 /*                             <h2>Je carbure à la caféine,*/
 /*                                 voici mes compétences</h2>*/
-/*                             <div class="table-responsive">*/
+/*                             <div class="top-buffer">*/
 /*                             <table class="table">*/
 /*                                 <tr>*/
 /*                                     <td>Photoshop CS6</td>*/
@@ -213,6 +243,14 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
 /*                                     <td><img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"></td>*/
 /*                                 </tr>*/
 /*                                 <tr>*/
+/*                                     <td>Affinity Designer</td>*/
+/*                                     <td><img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"></td>*/
+/*                                 </tr>*/
+/*                                 <tr>*/
+/*                                     <td>Affinity Photo</td>*/
+/*                                     <td><img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"></td>*/
+/*                                 </tr>*/
+/*                                 <tr>*/
 /*                                     <td>Acrobat Pro 10</td>*/
 /*                                     <td><img src="{{ 'assets/images/apple_full.png'|theme }}">  <img src="{{ 'assets/images/apple_full.png'|theme }}">  <img src="{{ 'assets/images/apple_full.png'|theme }}">  <img src="{{ 'assets/images/apple_full.png'|theme }}">  <img src="{{ 'assets/images/apple_minus.png'|theme }}"></td>*/
 /*                                 </tr>*/
@@ -225,7 +263,7 @@ class __TwigTemplate_13867de6a84ddd09fa0db615908d446a65b882747b47cfcb557cdd63236
 /*                                     <td><img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"></td>*/
 /*                                 </tr>*/
 /*                                 <tr>*/
-/*                                     <td>OctoberCMS Framework</td>*/
+/*                                     <td>OctoberCMS</td>*/
 /*                                     <td><img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_full.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"> <img src="{{ 'assets/images/apple_minus.png'|theme }}"></td>*/
 /*                                 </tr>*/
 /*                                 <tr>*/

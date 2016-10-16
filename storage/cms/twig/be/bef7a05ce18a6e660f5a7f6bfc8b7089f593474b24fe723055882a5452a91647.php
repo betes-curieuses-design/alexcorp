@@ -19,7 +19,7 @@ class __TwigTemplate_9e72a396edf79c92ea7a90f8268132e0da5bed4bdca647608ff1d90a123
         echo $this->getAttribute($this->getAttribute((isset($context["__SELF__"]) ? $context["__SELF__"] : null), "settings", array()), "text_top_form", array());
         echo "
 
-<form id=\"simpleContactForm\">
+<form id=\"simpleContactForm\" class=\"top-buffer\">
 
     <div id=\"simple_contact_flash_message\"></div>
 
@@ -122,7 +122,7 @@ class __TwigTemplate_9e72a396edf79c92ea7a90f8268132e0da5bed4bdca647608ff1d90a123
 }
 /* {{ __SELF__.settings.text_top_form|raw}}*/
 /* */
-/* <form id="simpleContactForm">*/
+/* <form id="simpleContactForm" class="top-buffer">*/
 /* */
 /*     <div id="simple_contact_flash_message"></div>*/
 /* */

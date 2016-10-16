@@ -1,7 +1,7 @@
 description = "Default Layout"
 
 [simpleContact]
-nameTitle = "Nom complet"
+nameTitle = "Votre nom et prénom"
 emailTitle = "Courriel"
 phoneTitle = "Téléphone"
 subjectTitle = "Sujet"
@@ -10,7 +10,7 @@ buttonText = "Soumettre"
 displayPhone = 1
 ==
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -24,7 +24,6 @@ displayPhone = 1
 	<link href="{{ ['assets/css/bootstrap.min.css',
 		'assets/css/font-awesome.min.css',
 		'assets/css/animate.min.css',
-		'assets/css/prettyPhoto.css',
 		'assets/css/style.css',
 		'assets/css/responsive.css',
 	]|theme }}" rel="stylesheet">
@@ -44,12 +43,12 @@ displayPhone = 1
     {% page %}
 
 <!--Contact form-->
-<section id="bottom">
+<section id="_contact">
     <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-12">
                 <div class="widget">
-                    <h3>Me contacter</h3>
+                    <h3 class="text-center">Allons prendre un café</h3>
                     {% component 'simpleContact' %}
                 </div>
             </div>
@@ -60,21 +59,20 @@ displayPhone = 1
 <footer id="footer">
 	{% partial "footer" %}
 </footer><!--/#footer-->
-<a id="scrollUp" href="#main-slider" title="Retour vers le haut de la page"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+<a id="scrollUp" href="#_home" title="Retour vers le haut de la page"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 
 <!-- Scripts -->
 <script type="text/javascript" src="{{ 'assets/js/html5shiv.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/respond.min.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/jquery.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/bootstrap.min.js'|theme }}"></script>
-<script type="text/javascript" src="{{ 'assets/js/jquery.prettyPhoto.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/jquery.isotope.min.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/main.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/wow.min.js'|theme }}"></script>
 <script>
     //Smoothscroll
     $(function() {
-        $('a[href*="#"]:not([href="#"])').click(function() {
+        $('a[href*="#_"]:not([href="#_"])').click(function() {
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
                 var target = $(this.hash);
                 target = target.length ? target : $('[name=' + this.hash.slice(1) +']');

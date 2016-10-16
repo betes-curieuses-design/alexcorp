@@ -17,7 +17,7 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
     {
         // line 1
         echo "<!DOCTYPE html>
-<html lang=\"en\">
+<html lang=\"fr\">
 <head>
     <meta charset=\"utf-8\">
 \t<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">
@@ -39,27 +39,27 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
         echo $this->env->getExtension('CMS')->displayBlock('styles');
         // line 13
         echo "\t<link href=\"";
-        echo $this->env->getExtension('CMS')->themeFilter(array(0 => "assets/css/bootstrap.min.css", 1 => "assets/css/font-awesome.min.css", 2 => "assets/css/animate.min.css", 3 => "assets/css/prettyPhoto.css", 4 => "assets/css/style.css", 5 => "assets/css/responsive.css"));
-        // line 19
+        echo $this->env->getExtension('CMS')->themeFilter(array(0 => "assets/css/bootstrap.min.css", 1 => "assets/css/font-awesome.min.css", 2 => "assets/css/animate.min.css", 3 => "assets/css/style.css", 4 => "assets/css/responsive.css"));
+        // line 18
         echo "\" rel=\"stylesheet\">
     <link rel=\"shortcut icon\" href=\"";
-        // line 20
+        // line 19
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/favicon.ico");
         echo "\">
     <link rel=\"apple-touch-icon-precomposed\" sizes=\"144x144\" href=\"";
-        // line 21
+        // line 20
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-144-precomposed.png");
         echo "\">
     <link rel=\"apple-touch-icon-precomposed\" sizes=\"114x114\" href=\"";
-        // line 22
+        // line 21
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-114-precomposed.png");
         echo "\">
     <link rel=\"apple-touch-icon-precomposed\" sizes=\"72x72\" href=\"";
-        // line 23
+        // line 22
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-72-precomposed.png");
         echo "\">
     <link rel=\"apple-touch-icon-precomposed\" href=\"";
-        // line 24
+        // line 23
         echo $this->env->getExtension('CMS')->themeFilter("assets/images/ico/apple-touch-icon-57-precomposed.png");
         echo "\">
 </head><!--/head-->
@@ -68,31 +68,31 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 
 <header id=\"header\">
         ";
-        // line 30
+        // line 29
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("nav"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 31
+        // line 30
         echo "</header><!--/header-->
 
     ";
-        // line 33
+        // line 32
         echo $this->env->getExtension('CMS')->pageFunction();
-        // line 34
+        // line 33
         echo "
 <!--Contact form-->
-<section id=\"bottom\">
+<section id=\"_contact\">
     <div class=\"container wow fadeInDown\" data-wow-duration=\"1000ms\" data-wow-delay=\"600ms\">
         <div class=\"row\">
             <div class=\"col-md-6 col-md-offset-3 col-sm-12\">
                 <div class=\"widget\">
-                    <h3>Me contacter</h3>
+                    <h3 class=\"text-center\">Allons prendre un café</h3>
                     ";
-        // line 42
+        // line 41
         $context['__cms_component_params'] = [];
         echo $this->env->getExtension('CMS')->componentFunction("simpleContact"        , $context['__cms_component_params']        );
         unset($context['__cms_component_params']);
-        // line 43
+        // line 42
         echo "                </div>
             </div>
         </div>
@@ -101,51 +101,47 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 
 <footer id=\"footer\">
 \t";
-        // line 50
+        // line 49
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("footer"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 51
+        // line 50
         echo "</footer><!--/#footer-->
-<a id=\"scrollUp\" href=\"#main-slider\" title=\"Retour vers le haut de la page\"><i class=\"fa fa-arrow-up\" aria-hidden=\"true\"></i></a>
+<a id=\"scrollUp\" href=\"#_home\" title=\"Retour vers le haut de la page\"><i class=\"fa fa-arrow-up\" aria-hidden=\"true\"></i></a>
 
 <!-- Scripts -->
 <script type=\"text/javascript\" src=\"";
-        // line 55
+        // line 54
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/html5shiv.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 56
+        // line 55
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/respond.min.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 57
+        // line 56
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/jquery.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 58
+        // line 57
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/bootstrap.min.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 59
-        echo $this->env->getExtension('CMS')->themeFilter("assets/js/jquery.prettyPhoto.js");
-        echo "\"></script>
-<script type=\"text/javascript\" src=\"";
-        // line 60
+        // line 58
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/jquery.isotope.min.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 61
+        // line 59
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/main.js");
         echo "\"></script>
 <script type=\"text/javascript\" src=\"";
-        // line 62
+        // line 60
         echo $this->env->getExtension('CMS')->themeFilter("assets/js/wow.min.js");
         echo "\"></script>
 <script>
     //Smoothscroll
     \$(function() {
-        \$('a[href*=\"#\"]:not([href=\"#\"])').click(function() {
+        \$('a[href*=\"#_\"]:not([href=\"#_\"])').click(function() {
             if (location.pathname.replace(/^\\//,'') == this.pathname.replace(/^\\//,'') && location.hostname == this.hostname) {
                 var target = \$(this.hash);
                 target = target.length ? target : \$('[name=' + this.hash.slice(1) +']');
@@ -160,14 +156,14 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
     });
     </script>
 ";
-        // line 80
+        // line 78
         echo '<script src="'. Request::getBasePath()
                 .'/modules/system/assets/js/framework.js"></script>'.PHP_EOL;
         echo '<script src="'. Request::getBasePath()
                     .'/modules/system/assets/js/framework.extras.js"></script>'.PHP_EOL;
         echo '<link rel="stylesheet" property="stylesheet" href="'. Request::getBasePath()
                     .'/modules/system/assets/css/framework.extras.css">'.PHP_EOL;
-        // line 81
+        // line 79
         echo $this->env->getExtension('CMS')->assetsFunction('js');
         echo $this->env->getExtension('CMS')->displayBlock('scripts');
         echo "             
@@ -188,11 +184,11 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 
     public function getDebugInfo()
     {
-        return array (  171 => 81,  164 => 80,  143 => 62,  139 => 61,  135 => 60,  131 => 59,  127 => 58,  123 => 57,  119 => 56,  115 => 55,  109 => 51,  105 => 50,  96 => 43,  92 => 42,  82 => 34,  80 => 33,  76 => 31,  72 => 30,  63 => 24,  59 => 23,  55 => 22,  51 => 21,  47 => 20,  44 => 19,  41 => 13,  38 => 12,  32 => 9,  27 => 7,  19 => 1,);
+        return array (  167 => 79,  160 => 78,  139 => 60,  135 => 59,  131 => 58,  127 => 57,  123 => 56,  119 => 55,  115 => 54,  109 => 50,  105 => 49,  96 => 42,  92 => 41,  82 => 33,  80 => 32,  76 => 30,  72 => 29,  63 => 23,  59 => 22,  55 => 21,  51 => 20,  47 => 19,  44 => 18,  41 => 13,  38 => 12,  32 => 9,  27 => 7,  19 => 1,);
     }
 }
 /* <!DOCTYPE html>*/
-/* <html lang="en">*/
+/* <html lang="fr">*/
 /* <head>*/
 /*     <meta charset="utf-8">*/
 /* 	<meta http-equiv="content-type" content="text/html; charset=utf-8">*/
@@ -206,7 +202,6 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 /* 	<link href="{{ ['assets/css/bootstrap.min.css',*/
 /* 		'assets/css/font-awesome.min.css',*/
 /* 		'assets/css/animate.min.css',*/
-/* 		'assets/css/prettyPhoto.css',*/
 /* 		'assets/css/style.css',*/
 /* 		'assets/css/responsive.css',*/
 /* 	]|theme }}" rel="stylesheet">*/
@@ -226,12 +221,12 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 /*     {% page %}*/
 /* */
 /* <!--Contact form-->*/
-/* <section id="bottom">*/
+/* <section id="_contact">*/
 /*     <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">*/
 /*         <div class="row">*/
 /*             <div class="col-md-6 col-md-offset-3 col-sm-12">*/
 /*                 <div class="widget">*/
-/*                     <h3>Me contacter</h3>*/
+/*                     <h3 class="text-center">Allons prendre un café</h3>*/
 /*                     {% component 'simpleContact' %}*/
 /*                 </div>*/
 /*             </div>*/
@@ -242,21 +237,20 @@ class __TwigTemplate_dedd5f51ead1e1b8cad821cabe694153bbf7538398473337097f16e8d2a
 /* <footer id="footer">*/
 /* 	{% partial "footer" %}*/
 /* </footer><!--/#footer-->*/
-/* <a id="scrollUp" href="#main-slider" title="Retour vers le haut de la page"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>*/
+/* <a id="scrollUp" href="#_home" title="Retour vers le haut de la page"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>*/
 /* */
 /* <!-- Scripts -->*/
 /* <script type="text/javascript" src="{{ 'assets/js/html5shiv.js'|theme }}"></script>*/
 /* <script type="text/javascript" src="{{ 'assets/js/respond.min.js'|theme }}"></script>*/
 /* <script type="text/javascript" src="{{ 'assets/js/jquery.js'|theme }}"></script>*/
 /* <script type="text/javascript" src="{{ 'assets/js/bootstrap.min.js'|theme }}"></script>*/
-/* <script type="text/javascript" src="{{ 'assets/js/jquery.prettyPhoto.js'|theme }}"></script>*/
 /* <script type="text/javascript" src="{{ 'assets/js/jquery.isotope.min.js'|theme }}"></script>*/
 /* <script type="text/javascript" src="{{ 'assets/js/main.js'|theme }}"></script>*/
 /* <script type="text/javascript" src="{{ 'assets/js/wow.min.js'|theme }}"></script>*/
 /* <script>*/
 /*     //Smoothscroll*/
 /*     $(function() {*/
-/*         $('a[href*="#"]:not([href="#"])').click(function() {*/
+/*         $('a[href*="#_"]:not([href="#_"])').click(function() {*/
 /*             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {*/
 /*                 var target = $(this.hash);*/
 /*                 target = target.length ? target : $('[name=' + this.hash.slice(1) +']');*/

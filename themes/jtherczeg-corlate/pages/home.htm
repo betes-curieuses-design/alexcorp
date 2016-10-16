@@ -2,41 +2,37 @@ title = "Home"
 url = "/"
 layout = "default"
 description = "Home Page"
-meta_description = "Free business HTML theme fromm ShapeBootstrap, converted for OctoberCMS"
 is_hidden = 0
 
 [Worklist]
 
-[Testimonials]
+[ShowImages]
+
+[testimonials]
 ==
-<section id="main-slider" class="no-margin">
-	{% partial "carousel" %}
-    <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
-        <i class="fa fa-chevron-left"></i>
-    </a>
-    <a class="next hidden-xs" href="#main-slider" data-slide="next">
-        <i class="fa fa-chevron-right"></i>
-    </a>
+<section id="_home" class="no-margin">
+	{% component 'ShowImages' %}
 </section>
 
-<section id="feature">
+<section id="_about">
 	{% partial "features" %}
 </section>
 
-<section id="services" class="service-item">
+<section id="_competance">
     {% partial "services" %}
 </section>
 
-<section id="recent-works">
+<section id="_portfolio">
 	<div class="container">
             <div class="center wow fadeInDown">
-                <h2>Recent Works</h2>
-                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+                <h2 style="padding-top: 40px ;">Portfolio</h2>
             </div>
 {% component 'Worklist' %}
         </div><!--/.container-->
 </section>
 
 <section id="testimonial">
-            {% component 'Testimonials' %}
+    <div class="container">
+    {% component 'testimonials' %}
+</div>
 </section>

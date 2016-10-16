@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Slider
+
+# Model Form Field configuration
+form: $/betescurieuses/slider/models/slider/fields.yaml
+
+# Model Class name
+modelClass: BetesCurieuses\Slider\Models\Slider
+
+# Default redirect location
+defaultRedirect: betescurieuses/slider/slider
+
+# Create page
+create:
+    title: Create Slider
+    redirect: betescurieuses/slider/slider/update/:id
+    redirectClose: betescurieuses/slider/slider
+
+# Update page
+update:
+    title: Edit Slider
+    redirect: betescurieuses/slider/slider
+    redirectClose: betescurieuses/slider/slider
+
+# Preview page
+preview:
+    title: Preview Slider

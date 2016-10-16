@@ -1,0 +1,37 @@
+fields:
+    is_public:
+        label: mja.testimonials::lang.fields.is_public
+        type: radio
+        options:
+            0: mja.testimonials::lang.fields.private
+            1: mja.testimonials::lang.fields.public
+        default: 1
+        span: left
+
+    date:
+        label: mja.testimonials::lang.fields.date
+        comment: mja.testimonials::lang.fields.date_comment
+        type: datepicker
+        mode: date
+        span: right
+
+    content:
+        type: richeditor
+
+    author:
+        label: mja.testimonials::lang.fields.author
+        span: left
+
+    avatar:
+        label: mja.testimonials::lang.fields.avatar
+        type: fileupload
+        mode: image
+        imageWidth: 100
+        imageHeight: 100
+        span: auto
+
+    author_bio:
+        label: mja.testimonials::lang.fields.author_bio
+        span: left
+        type: textarea
+        size: small

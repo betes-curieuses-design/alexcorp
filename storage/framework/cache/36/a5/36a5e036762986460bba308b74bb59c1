@@ -1,4 +1,4 @@
-1476316111a:1:{s:11:"offline.htm";a:8:{s:8:"fileName";s:11:"offline.htm";s:7:"content";s:1525:"title = "Site Maintenance"
+1476637625a:1:{s:11:"offline.htm";a:8:{s:8:"fileName";s:11:"offline.htm";s:7:"content";s:1540:"title = "Site Maintenance"
 url = "/offline"
 description = "Site Maintenance page"
 ==
@@ -22,14 +22,14 @@ description = "Site Maintenance page"
 </head>
 <body>
 <div id="border">
-<div id="logobg">
-	<img src="{{ 'assets/images/logo.png'|theme }}" alt="logo"><br/>
+<div>
+	<img src="{{ 'assets/images/alexfoisy_logo.png'|theme }}" alt="logo"><br/>
 </div>	
-<h2>Offline</h2>
-	<p>This site is currently down for maintenance.<br>Please return soon.</p>
+<h2>Maintenance en cours!</h2>
+	<p>Ce site Web est actuellement en maintenance<br>Revenez très bientôt!</p>
 </div>
 </body>
-</html>";s:5:"mtime";i:1476027605;s:6:"markup";s:1440:"<!DOCTYPE html>
+</html>";s:5:"mtime";i:1476637024;s:6:"markup";s:1455:"<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -49,11 +49,11 @@ description = "Site Maintenance page"
 </head>
 <body>
 <div id="border">
-<div id="logobg">
-	<img src="{{ 'assets/images/logo.png'|theme }}" alt="logo"><br/>
+<div>
+	<img src="{{ 'assets/images/alexfoisy_logo.png'|theme }}" alt="logo"><br/>
 </div>	
-<h2>Offline</h2>
-	<p>This site is currently down for maintenance.<br>Please return soon.</p>
+<h2>Maintenance en cours!</h2>
+	<p>Ce site Web est actuellement en maintenance<br>Revenez très bientôt!</p>
 </div>
 </body>
 </html>";s:4:"code";N;s:5:"title";s:16:"Site Maintenance";s:3:"url";s:8:"/offline";s:11:"description";s:21:"Site Maintenance page";}}

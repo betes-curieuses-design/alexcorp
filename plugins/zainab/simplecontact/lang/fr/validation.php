@@ -1,7 +1,7 @@
 <?php return [
         'custom' => [
             'name' => [
-                'required' => 'Votre nom est requis pour savoir à qui je dois m\'adresser!',
+                'required' => 'Votre nom est requis!',
             ],
             'email' => [
                 'required' => 'Votre adresse courriel est requise!',

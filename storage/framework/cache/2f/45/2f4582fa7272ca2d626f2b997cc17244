@@ -1,0 +1,30 @@
+1476637962a:1:{s:24:"testimonials/default.htm";a:5:{s:8:"fileName";s:24:"testimonials/default.htm";s:7:"content";s:674:"<div class="row testimonial">
+    {% for testimonial in testimonials %}
+        <div class="col-lg-offset-2 col-lg-10 col-sm-offset-2 col-sm-10 col-xs-offset-0 col-xs-12 all-top-buffer">
+            <div class="col-sm-offset-0 col-sm-3 col-xs-offset-3 col-xs-6">
+                <img class="img-responsive round-image" src="{{ testimonial.avatar.path }}" alt="">
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                {{ testimonial.content|raw }}
+                {% if testimonial.author %}
+                <p class="who">- {{ testimonial.author }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+";s:5:"mtime";i:1476633114;s:6:"markup";s:673:"<div class="row testimonial">
+    {% for testimonial in testimonials %}
+        <div class="col-lg-offset-2 col-lg-10 col-sm-offset-2 col-sm-10 col-xs-offset-0 col-xs-12 all-top-buffer">
+            <div class="col-sm-offset-0 col-sm-3 col-xs-offset-3 col-xs-6">
+                <img class="img-responsive round-image" src="{{ testimonial.avatar.path }}" alt="">
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                {{ testimonial.content|raw }}
+                {% if testimonial.author %}
+                <p class="who">- {{ testimonial.author }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>";s:4:"code";N;}}

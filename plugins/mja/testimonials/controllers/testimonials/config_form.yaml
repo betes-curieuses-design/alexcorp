@@ -1,0 +1,18 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: mja.testimonials::lang.controller.form.title
+form: $/mja/testimonials/models/testimonial/fields.yaml
+modelClass: Mja\Testimonials\Models\Testimonial
+defaultRedirect: mja/testimonials/testimonials
+
+create:
+    title: mja.testimonials::lang.controller.form.create_title
+    redirect: mja/testimonials/testimonials/update/:id
+    redirectClose: mja/testimonials/testimonials
+
+update:
+    title: mja.testimonials::lang.controller.form.update_title
+    redirect: mja/testimonials/testimonials
+    redirectClose: mja/testimonials/testimonials

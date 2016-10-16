@@ -35,19 +35,19 @@ class __TwigTemplate_f0c5cfe4443814fc637c278c420fb5d60adb20d38849fa0af4a65ec3381
 \t\t<div class=\"collapse navbar-collapse navbar-right\">
 \t\t\t<ul class=\"nav navbar-nav\">
                 <li>
-                    <a href=\"#main-slider\"> Accueil</a>
+                    <a href=\"#_home\"> Accueil</a>
 \t\t\t\t</li>
 \t\t\t\t<li>
-\t\t\t\t\t<a href=\"#feature\"> À Propos</a>
+\t\t\t\t\t<a href=\"#_about\"> À Propos</a>
 \t\t\t\t</li>
 \t\t\t\t<li>
-\t\t\t\t\t<a href=\"#services\"> Compétances</a>
+\t\t\t\t\t<a href=\"#_competance\"> Compétances</a>
 \t\t\t\t</li>
 \t\t\t\t<li>
-\t\t\t\t\t<a href=\"#recent-works\"> Portfolio</a>
+\t\t\t\t\t<a href=\"#_portfolio\"> Portfolio</a>
 \t\t\t\t</li>
 \t\t\t\t<li>
-\t\t\t\t\t<a href=\"#conatcat-info\"> Contact</a>
+\t\t\t\t\t<a href=\"#_contact\"> Contact</a>
 \t\t\t\t</li>
 \t\t\t</ul>
 \t\t</div>
@@ -84,19 +84,19 @@ class __TwigTemplate_f0c5cfe4443814fc637c278c420fb5d60adb20d38849fa0af4a65ec3381
 /* 		<div class="collapse navbar-collapse navbar-right">*/
 /* 			<ul class="nav navbar-nav">*/
 /*                 <li>*/
-/*                     <a href="#main-slider"> Accueil</a>*/
+/*                     <a href="#_home"> Accueil</a>*/
 /* 				</li>*/
 /* 				<li>*/
-/* 					<a href="#feature"> À Propos</a>*/
+/* 					<a href="#_about"> À Propos</a>*/
 /* 				</li>*/
 /* 				<li>*/
-/* 					<a href="#services"> Compétances</a>*/
+/* 					<a href="#_competance"> Compétances</a>*/
 /* 				</li>*/
 /* 				<li>*/
-/* 					<a href="#recent-works"> Portfolio</a>*/
+/* 					<a href="#_portfolio"> Portfolio</a>*/
 /* 				</li>*/
 /* 				<li>*/
-/* 					<a href="#conatcat-info"> Contact</a>*/
+/* 					<a href="#_contact"> Contact</a>*/
 /* 				</li>*/
 /* 			</ul>*/
 /* 		</div>*/

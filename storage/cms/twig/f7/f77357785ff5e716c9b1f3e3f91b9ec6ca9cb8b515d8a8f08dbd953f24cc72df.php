@@ -16,62 +16,57 @@ class __TwigTemplate_3caadc866cfe89fdabe12d242d6611aa2164ae6fe921ce87d08597526d2
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        echo "<section id=\"main-slider\" class=\"no-margin\">
+        echo "<section id=\"_home\" class=\"no-margin\">
 \t";
         // line 2
-        $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("carousel"        , $context['__cms_partial_params']        );
-        unset($context['__cms_partial_params']);
+        $context['__cms_component_params'] = [];
+        echo $this->env->getExtension('CMS')->componentFunction("ShowImages"        , $context['__cms_component_params']        );
+        unset($context['__cms_component_params']);
         // line 3
-        echo "    <a class=\"prev hidden-xs\" href=\"#main-slider\" data-slide=\"prev\">
-        <i class=\"fa fa-chevron-left\"></i>
-    </a>
-    <a class=\"next hidden-xs\" href=\"#main-slider\" data-slide=\"next\">
-        <i class=\"fa fa-chevron-right\"></i>
-    </a>
-</section>
+        echo "</section>
 
-<section id=\"feature\">
+<section id=\"_about\">
 \t";
-        // line 12
+        // line 6
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("features"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 13
+        // line 7
         echo "</section>
 
-<section id=\"services\" class=\"service-item\">
+<section id=\"_competance\">
     ";
-        // line 16
+        // line 10
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("services"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 17
+        // line 11
         echo "</section>
 
-<section id=\"recent-works\">
+<section id=\"_portfolio\">
 \t<div class=\"container\">
             <div class=\"center wow fadeInDown\">
-                <h2>Recent Works</h2>
-                <p class=\"lead\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+                <h2 style=\"padding-top: 40px ;\">Portfolio</h2>
             </div>
 ";
-        // line 25
+        // line 18
         $context['__cms_component_params'] = [];
         echo $this->env->getExtension('CMS')->componentFunction("Worklist"        , $context['__cms_component_params']        );
         unset($context['__cms_component_params']);
-        // line 26
+        // line 19
         echo "        </div><!--/.container-->
 </section>
 
 <section id=\"testimonial\">
-            ";
-        // line 30
+    <div class=\"container\">
+    ";
+        // line 24
         $context['__cms_component_params'] = [];
-        echo $this->env->getExtension('CMS')->componentFunction("Testimonials"        , $context['__cms_component_params']        );
+        echo $this->env->getExtension('CMS')->componentFunction("testimonials"        , $context['__cms_component_params']        );
         unset($context['__cms_component_params']);
-        // line 31
-        echo "</section>";
+        // line 25
+        echo "</div>
+</section>";
     }
 
     public function getTemplateName()
@@ -86,37 +81,32 @@ class __TwigTemplate_3caadc866cfe89fdabe12d242d6611aa2164ae6fe921ce87d08597526d2
 
     public function getDebugInfo()
     {
-        return array (  74 => 31,  70 => 30,  64 => 26,  60 => 25,  50 => 17,  46 => 16,  41 => 13,  37 => 12,  26 => 3,  22 => 2,  19 => 1,);
+        return array (  68 => 25,  64 => 24,  57 => 19,  53 => 18,  44 => 11,  40 => 10,  35 => 7,  31 => 6,  26 => 3,  22 => 2,  19 => 1,);
     }
 }
-/* <section id="main-slider" class="no-margin">*/
-/* 	{% partial "carousel" %}*/
-/*     <a class="prev hidden-xs" href="#main-slider" data-slide="prev">*/
-/*         <i class="fa fa-chevron-left"></i>*/
-/*     </a>*/
-/*     <a class="next hidden-xs" href="#main-slider" data-slide="next">*/
-/*         <i class="fa fa-chevron-right"></i>*/
-/*     </a>*/
+/* <section id="_home" class="no-margin">*/
+/* 	{% component 'ShowImages' %}*/
 /* </section>*/
 /* */
-/* <section id="feature">*/
+/* <section id="_about">*/
 /* 	{% partial "features" %}*/
 /* </section>*/
 /* */
-/* <section id="services" class="service-item">*/
+/* <section id="_competance">*/
 /*     {% partial "services" %}*/
 /* </section>*/
 /* */
-/* <section id="recent-works">*/
+/* <section id="_portfolio">*/
 /* 	<div class="container">*/
 /*             <div class="center wow fadeInDown">*/
-/*                 <h2>Recent Works</h2>*/
-/*                 <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>*/
+/*                 <h2 style="padding-top: 40px ;">Portfolio</h2>*/
 /*             </div>*/
 /* {% component 'Worklist' %}*/
 /*         </div><!--/.container-->*/
 /* </section>*/
 /* */
 /* <section id="testimonial">*/
-/*             {% component 'Testimonials' %}*/
+/*     <div class="container">*/
+/*     {% component 'testimonials' %}*/
+/* </div>*/
 /* </section>*/

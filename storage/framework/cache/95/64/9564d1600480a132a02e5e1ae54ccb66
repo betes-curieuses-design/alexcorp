@@ -1,6 +1,6 @@
-1476237111a:1:{s:25:"simpleContact/default.htm";a:5:{s:8:"fileName";s:25:"simpleContact/default.htm";s:7:"content";s:1849:"{{ __SELF__.settings.text_top_form|raw}}
+1476637403a:1:{s:25:"simpleContact/default.htm";a:5:{s:8:"fileName";s:25:"simpleContact/default.htm";s:7:"content";s:1868:"{{ __SELF__.settings.text_top_form|raw}}
 
-<form id="simpleContactForm">
+<form id="simpleContactForm" class="top-buffer">
 
     <div id="simple_contact_flash_message"></div>
 
@@ -49,9 +49,9 @@
         {{__SELF__.properties.buttonText}}
     </button>
 
-</form>";s:5:"mtime";i:1476030873;s:6:"markup";s:1849:"{{ __SELF__.settings.text_top_form|raw}}
+</form>";s:5:"mtime";i:1476323522;s:6:"markup";s:1868:"{{ __SELF__.settings.text_top_form|raw}}
 
-<form id="simpleContactForm">
+<form id="simpleContactForm" class="top-buffer">
 
     <div id="simple_contact_flash_message"></div>
 

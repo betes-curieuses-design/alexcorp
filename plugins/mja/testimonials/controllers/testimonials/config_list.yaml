@@ -1,0 +1,16 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: mja.testimonials::lang.controller.list.title
+list: $/mja/testimonials/models/testimonial/columns.yaml
+modelClass: Mja\Testimonials\Models\Testimonial
+recordUrl: mja/testimonials/testimonials/update/:id
+recordsPerPage: 20
+showSetup: true
+showCheckboxes: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
