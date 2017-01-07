@@ -1,8 +1,9 @@
 {{ __SELF__.settings.text_top_form|raw}}
 
-<form id="simpleContactForm" class="top-buffer">
+<form id="simpleContactForm" data-request="{{ __SELF__ }}::onFormSubmit">
 
     <div id="simple_contact_flash_message"></div>
+
 
     <div class="row">
         <div class="form-group col-sm-12">
@@ -44,7 +45,6 @@
     <!-- End reCaptcha -->
 
     <button id="simpleContactSubmitButton"
-            data-request="{{ __SELF__ }}::onFormSubmit"
             type="submit" class="btn btn-primary pull-right">
         {{__SELF__.properties.buttonText}}
     </button>

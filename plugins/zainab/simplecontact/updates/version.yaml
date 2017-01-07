@@ -13,3 +13,15 @@
     - 'Language added -- Portuguese (Brazil)'
 1.0.6:
     - 'grecaptcha reset bug fixed'
+1.1.0:
+    - 'sql_modes NO_ZERO_IN_DATE,NO_ZERO_DATE fixed'
+    - 'minor bugs fixed'
+1.1.1:
+    - 'Language added -- Russian'
+    - 'minor bug fixed'
+2.0.0:
+    - 'Translate Plugin Dependency Added (RainLab.Translate)'
+    - 'Languages Added (Arabic, Chinese)'
+2.0.1:
+    - 'Migration Bug Fixed'
+    - 'Notification Email Updated'

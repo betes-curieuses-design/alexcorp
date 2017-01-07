@@ -1,4 +1,4 @@
-1476756639a:1:{s:8:"home.htm";a:15:{s:8:"fileName";s:8:"home.htm";s:7:"content";s:948:"title = "Portfolio d'Alexandre Foisy | Designer Graphique"
+1483825116a:1:{s:8:"home.htm";a:15:{s:8:"fileName";s:8:"home.htm";s:7:"content";s:962:"title = "Portfolio d'Alexandre Foisy | Designer Graphique"
 url = "/"
 layout = "default"
 description = "Portfolio Web du designer graphique Alexandre Foisy."
@@ -37,7 +37,7 @@ is_hidden = 0
     <div class="container">
     {% component 'testimonials' %}
 </div>
-</section>";s:5:"mtime";i:1476650400;s:6:"markup";s:594:"<section id="_home" class="no-margin">
+</section>";s:5:"mtime";i:1483823362;s:6:"markup";s:594:"<section id="_home" class="no-margin">
 	{% component 'ShowImages' %}
 </section>
 

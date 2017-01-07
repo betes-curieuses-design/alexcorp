@@ -17,8 +17,7 @@ class BuilderTableCreateZainabSimplecontactContact extends Migration
             $table->string('subject')->nullable();
             $table->text('message')->nullable();
             $table->boolean('is_new')->default(1);
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamps();
         });
     }
     
