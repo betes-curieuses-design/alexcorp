@@ -49,7 +49,9 @@ return [
             . 'Le placeholder correspondant sera remplacé par cette valeur dans l\'URL cible',
         'permanent' => '301 - Permanente',
         'temporary' => '302 - Temporaire',
+        'see_other' => '303 - See Other', // TODO
         'not_found' => '404 - Page non trouvée',
+        'gone' => '410 - Gone', // TODO
         'enabled' => 'Activée',
         'enabled_comment' => 'Actionnez ce switch pour activer la redirection.',
         'priority' => 'Priorité',
@@ -109,6 +111,7 @@ return [
         'create_category' => 'Create category', // TODO
         'edit_category' => 'Edit category', // TODO
         'view_redirect_log' => 'View redirect log', // TODO
+        'statistics' => 'Statistics', // TODO
     ],
     'buttons' => [
         'add' => 'Add', // TODO

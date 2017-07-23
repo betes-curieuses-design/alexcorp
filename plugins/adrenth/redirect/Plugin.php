@@ -138,13 +138,21 @@ class Plugin extends PluginBase
             'redirect' => [
                 'label' => 'adrenth.redirect::lang.navigation.menu_label',
                 'icon' => 'icon-link',
-                'url' => Backend::url('adrenth/redirect/redirects'),
+                'url' => Backend::url('adrenth/redirect/statistics'),
                 'order' => 50,
                 'permissions' => [
                     'adrenth.redirect.access_redirects',
                 ],
                 'sideMenu' => [
-                    'index' => [
+                    'statistics' => [
+                        'icon' => 'icon-bar-chart',
+                        'label' => 'adrenth.redirect::lang.title.statistics',
+                        'url' => Backend::url('adrenth/redirect/statistics'),
+                        'permissions' => [
+                            'adrenth.redirect.access_redirects',
+                        ],
+                    ],
+                    'redirects' => [
                         'icon' => 'icon-link',
                         'label' => 'adrenth.redirect::lang.navigation.menu_label',
                         'url' => Backend::url('adrenth/redirect/redirects'),
@@ -168,7 +176,7 @@ class Plugin extends PluginBase
                             'adrenth.redirect.access_redirects',
                         ],
                     ],
-                    'category' => [
+                    'categories' => [
                         'label' => 'adrenth.redirect::lang.buttons.categories',
                         'url' => Backend::url('adrenth/redirect/categories'),
                         'icon' => 'icon-tag',
@@ -217,7 +225,7 @@ class Plugin extends PluginBase
                     case Redirect::TYPE_EXACT:
                         return e(trans('adrenth.redirect::lang.redirect.exact'));
                     case Redirect::TYPE_PLACEHOLDERS:
-                        return e(trans('adrenth.redirect::lang.redirect.exact'));
+                        return e(trans('adrenth.redirect::lang.redirect.placeholders'));
                     default:
                         return $value;
                 }
@@ -228,8 +236,12 @@ class Plugin extends PluginBase
                         return e(trans('adrenth.redirect::lang.redirect.permanent'));
                     case 302:
                         return e(trans('adrenth.redirect::lang.redirect.temporary'));
+                    case 303:
+                        return e(trans('adrenth.redirect::lang.redirect.see_other'));
                     case 404:
                         return e(trans('adrenth.redirect::lang.redirect.not_found'));
+                    case 410:
+                        return e(trans('adrenth.redirect::lang.redirect.gone'));
                     default:
                         return $value;
                 }

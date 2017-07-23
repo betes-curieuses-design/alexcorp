@@ -3,8 +3,8 @@
 namespace Adrenth\Redirect\Updates;
 
 use Illuminate\Database\Schema\Blueprint;
-use Schema;
 use October\Rain\Database\Updates\Migration;
+use Schema;
 
 /**
  * Class AddTargetTypeColumnsToRedirectsTable
@@ -27,9 +27,7 @@ class AddTargetTypeColumnsToRedirectsTable extends Migration
     public function down()
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->dropColumn('target_type');
-            $table->dropColumn('cms_page');
-            $table->dropColumn('static_page');
+            $table->dropColumn(['cms_page', 'static_page']);
         });
     }
 }

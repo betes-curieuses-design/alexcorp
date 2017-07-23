@@ -13,6 +13,7 @@ namespace Symfony\Component\Console;
 
 use Symfony\Component\Console\Descriptor\TextDescriptor;
 use Symfony\Component\Console\Descriptor\XmlDescriptor;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Helper\DebugFormatterHelper;
 use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -103,7 +104,7 @@ class Application
      *
      * @return int 0 if everything went fine, or an error code
      *
-     * @throws \Exception When doRun returns Exception
+     * @throws \Exception When running fails. Bypass this when {@link setCatchExceptions()}.
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
@@ -118,10 +119,17 @@ class Application
         $this->configureIO($input, $output);
 
         try {
+            $e = null;
             $exitCode = $this->doRun($input, $output);
-        } catch (\Exception $e) {
+        } catch (\Exception $x) {
+            $e = $x;
+        } catch (\Throwable $x) {
+            $e = new FatalThrowableError($x);
+        }
+
+        if (null !== $e) {
             if (!$this->catchExceptions) {
-                throw $e;
+                throw $x;
             }
 
             if ($output instanceof ConsoleOutputInterface) {
@@ -183,6 +191,7 @@ class Application
             $input = new ArrayInput(array('command' => $this->defaultCommand));
         }
 
+        $this->runningCommand = null;
         // the command name MUST be the first element of the input
         $command = $this->find($name);
 
@@ -387,7 +396,7 @@ class Application
      *
      * @return Command A Command object
      *
-     * @throws \InvalidArgumentException When command name given does not exist
+     * @throws \InvalidArgumentException When given command name does not exist
      */
     public function get($name)
     {
@@ -651,12 +660,11 @@ class Application
             if (defined('HHVM_VERSION') && $width > 1 << 31) {
                 $width = 1 << 31;
             }
-            $formatter = $output->getFormatter();
             $lines = array();
             foreach (preg_split('/\r?\n/', $e->getMessage()) as $line) {
                 foreach ($this->splitStringByWidth($line, $width - 4) as $line) {
                     // pre-format lines to get the right string length
-                    $lineLength = $this->stringWidth(preg_replace('/\[[^m]*m/', '', $formatter->format($line))) + 4;
+                    $lineLength = $this->stringWidth($line) + 4;
                     $lines[] = array($line, $lineLength);
 
                     $len = max($lineLength, $len);
@@ -664,15 +672,15 @@ class Application
             }
 
             $messages = array();
-            $messages[] = $emptyLine = $formatter->format(sprintf('<error>%s</error>', str_repeat(' ', $len)));
-            $messages[] = $formatter->format(sprintf('<error>%s%s</error>', $title, str_repeat(' ', max(0, $len - $this->stringWidth($title)))));
+            $messages[] = $emptyLine = sprintf('<error>%s</error>', str_repeat(' ', $len));
+            $messages[] = sprintf('<error>%s%s</error>', $title, str_repeat(' ', max(0, $len - $this->stringWidth($title))));
             foreach ($lines as $line) {
-                $messages[] = $formatter->format(sprintf('<error>  %s  %s</error>', $line[0], str_repeat(' ', $len - $line[1])));
+                $messages[] = sprintf('<error>  %s  %s</error>', OutputFormatter::escape($line[0]), str_repeat(' ', $len - $line[1]));
             }
             $messages[] = $emptyLine;
             $messages[] = '';
 
-            $output->writeln($messages, OutputInterface::OUTPUT_RAW);
+            $output->writeln($messages);
 
             if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
                 $output->writeln('<comment>Exception trace:</comment>');
@@ -774,7 +782,7 @@ class Application
      * @param int $width  The width
      * @param int $height The height
      *
-     * @return Application The current application
+     * @return $this
      */
     public function setTerminalDimensions($width, $height)
     {
@@ -831,8 +839,6 @@ class Application
      * @param OutputInterface $output  An Output instance
      *
      * @return int 0 if everything went fine, or an error code
-     *
-     * @throws \Exception when the command being run threw an exception
      */
     protected function doRunCommand(Command $command, InputInterface $input, OutputInterface $output)
     {
@@ -847,36 +853,36 @@ class Application
         }
 
         $event = new ConsoleCommandEvent($command, $input, $output);
-        $this->dispatcher->dispatch(ConsoleEvents::COMMAND, $event);
+        $e = null;
 
-        if ($event->commandShouldRun()) {
-            try {
-                $e = null;
+        try {
+            $this->dispatcher->dispatch(ConsoleEvents::COMMAND, $event);
+
+            if ($event->commandShouldRun()) {
                 $exitCode = $command->run($input, $output);
-            } catch (\Exception $x) {
-                $e = $x;
-            } catch (\Throwable $x) {
-                $e = new FatalThrowableError($x);
+            } else {
+                $exitCode = ConsoleCommandEvent::RETURN_CODE_DISABLED;
             }
-            if (null !== $e) {
-                $event = new ConsoleExceptionEvent($command, $input, $output, $e, $e->getCode());
-                $this->dispatcher->dispatch(ConsoleEvents::EXCEPTION, $event);
+        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+        }
+        if (null !== $e) {
+            $x = $e instanceof \Exception ? $e : new FatalThrowableError($e);
+            $event = new ConsoleExceptionEvent($command, $input, $output, $x, $x->getCode());
+            $this->dispatcher->dispatch(ConsoleEvents::EXCEPTION, $event);
 
-                if ($e !== $event->getException()) {
-                    $x = $e = $event->getException();
-                }
-
-                $event = new ConsoleTerminateEvent($command, $input, $output, $e->getCode());
-                $this->dispatcher->dispatch(ConsoleEvents::TERMINATE, $event);
-
-                throw $x;
+            if ($x !== $event->getException()) {
+                $e = $event->getException();
             }
-        } else {
-            $exitCode = ConsoleCommandEvent::RETURN_CODE_DISABLED;
+            $exitCode = $e->getCode();
         }
 
         $event = new ConsoleTerminateEvent($command, $input, $output, $exitCode);
         $this->dispatcher->dispatch(ConsoleEvents::TERMINATE, $event);
+
+        if (null !== $e) {
+            throw $e;
+        }
 
         return $event->getExitCode();
     }

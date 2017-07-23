@@ -46,7 +46,9 @@ return [
         'replacement_comment' => 'Ange en valfritt ersättningsvärde för denna platshållare. Den matchade platshållaren kommer att ersättas av detta värde i måladressen',
         'permanent' => '301 - Permanent',
         'temporary' => '302 - Tillfällig',
+        'see_other' => '303 - See Other', // TODO
         'not_found' => '404 - Ofunnen',
+        'gone' => '410 - Gone', // TODO
         'enabled' => 'Aktiv',
         'enabled_comment' => 'Slå på för att aktivera ompekningen',
         'priority' => 'Prioritet',
@@ -105,6 +107,7 @@ return [
         'create_category' => 'Skapa kategori',
         'edit_category' => 'Ändra kategori',
         'view_redirect_log' => 'View redirect log', // TODO
+        'statistics' => 'Statistics', // TODO
     ],
     'buttons' => [
         'add' => 'Skapa',

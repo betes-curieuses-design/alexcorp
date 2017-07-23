@@ -48,7 +48,9 @@ return [
             . 'The matched placeholder will be replaced with this value in the target URL.',
         'permanent' => '301 - Permanent',
         'temporary' => '302 - Temporary',
+        'see_other' => '303 - See Other',
         'not_found' => '404 - Not Found',
+        'gone' => '410 - Gone',
         'enabled' => 'Enabled',
         'enabled_comment' => 'Flick this switch to enable this redirect.',
         'priority' => 'Priority',
@@ -107,6 +109,7 @@ return [
         'create_category' => 'Create category',
         'edit_category' => 'Edit category',
         'view_redirect_log' => 'View redirect log',
+        'statistics' => 'Statistics',
     ],
     'buttons' => [
         'add' => 'Add', // since 2.0.3

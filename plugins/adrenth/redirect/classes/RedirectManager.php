@@ -38,6 +38,19 @@ class RedirectManager
     private $basePath;
 
     /**
+     * HTTP 1.1 headers
+     *
+     * @var array
+     */
+    private static $headers = [
+        301 => 'HTTP/1.1 301 Moved Permanently',
+        302 => 'HTTP/1.1 302 Found',
+        303 => 'HTTP/1.1 303 See Other',
+        404 => 'HTTP/1.1 404 Not Found',
+        410 => 'HTTP/1.1 410 Gone',
+    ];
+
+    /**
      * Constructs a RedirectManager instance
      */
     protected function __construct()
@@ -118,9 +131,12 @@ class RedirectManager
     {
         $this->updateStatistics($rule->getId());
 
-        if ($rule->getStatusCode() === 404) {
+        $statusCode = $rule->getStatusCode();
+
+        if ($statusCode === 404 || $statusCode === 410) {
+            header(self::$headers[$statusCode], true, $statusCode);
             $this->addLogEntry($rule, $requestUri, '');
-            abort($rule->getStatusCode(), 'Not Found');
+            exit(0);
         }
 
         $toUrl = $this->getLocation($rule);
@@ -131,8 +147,10 @@ class RedirectManager
 
         $this->addLogEntry($rule, $requestUri, $toUrl);
 
-        header('Location: ' . $toUrl, true, $rule->getStatusCode());
-        exit();
+        header(self::$headers[$statusCode], true, $statusCode);
+        header('Location: ' . $toUrl, true, $statusCode);
+
+        exit(0);
     }
 
     /**
@@ -216,6 +234,7 @@ class RedirectManager
     private function redirectToStaticPage(RedirectRule $rule)
     {
         if (class_exists('\RainLab\Pages\Classes\Page')) {
+            /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             return \RainLab\Pages\Classes\Page::url($rule->getStaticPage());
         }
 
@@ -367,7 +386,7 @@ class RedirectManager
     /**
      * Load definitions into memory
      *
-     * @return RedirectRule[]
+     * @return void
      */
     private function loadRedirectRules()
     {
@@ -378,6 +397,7 @@ class RedirectManager
         $rules = [];
 
         try {
+            /** @var Reader $reader */
             $reader = Reader::createFromPath($this->redirectRulesPath);
 
             foreach ($reader as $row) {

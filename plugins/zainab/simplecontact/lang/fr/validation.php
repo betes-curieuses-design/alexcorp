@@ -1,20 +1,20 @@
 <?php return [
         'custom' => [
             'name' => [
-                'required' => 'Votre nom est requis!',
+                'required' => 'Nous avons besoin de savoir votre nom!',
             ],
             'email' => [
-                'required' => 'Votre adresse courriel est requise!',
-                'email' => 'SVP, ajoutez une adresse courriel valide!'
+                'required' => 'Le courriel est obligatoire',
+                'email' => 'Veuillez fournir une adresse valide!'
             ],
             'subject' => [
-                'required' => 'SVP, ajoutez un sujet à votre message!',
+                'required' => 'Veuillez fournir le sujet de votre message!',
             ],
             'message' => [
-                'required' => 'Aucun contenu dans votre message. Avez-vous une question?',
+                'required' => 'Le champ Message est requis!',
             ],
             'reCAPTCHA' => [
-                'required' => 'Wow! Êtes-vous vraiment un être humain? Remplisez à nouveau le Captcha SVP.'
+                'required' => 'Test humain échoué, veuillez cocher la case reCAPTCHA'
             ]
         ]
     ];

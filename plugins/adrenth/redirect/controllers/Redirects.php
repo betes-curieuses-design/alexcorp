@@ -6,25 +6,36 @@ use Adrenth\Redirect\Classes\PublishManager;
 use Adrenth\Redirect\Classes\RedirectManager;
 use Adrenth\Redirect\Classes\RedirectRule;
 use Adrenth\Redirect\Models\Redirect;
+use ApplicationException;
+use Backend\Behaviors\FormController;
+use Backend\Behaviors\ImportExportController;
+use Backend\Behaviors\ListController;
+use Backend\Behaviors\ReorderController;
 use Backend\Classes\Controller;
 use Backend\Classes\FormField;
 use Backend\Widgets\Form;
 use BackendMenu;
 use Carbon\Carbon;
 use Event;
+use Exception;
 use Flash;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Lang;
 use Redirect as RedirectFacade;
 use Request;
 use System\Models\RequestLog;
 
+/** @noinspection ClassOverridesFieldOfSuperClassInspection */
+
 /**
  * Class Redirects
  *
  * @package Adrenth\Redirect\Controllers
- * @method array listRefresh()
- * @method void makeLists()
+ * @mixin FormController
+ * @mixin ListController
+ * @mixin ReorderController
+ * @mixin ImportExportController
  */
 class Redirects extends Controller
 {
@@ -63,7 +74,11 @@ class Redirects extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Adrenth.Redirect', 'redirect', $this->action);
+        $sideMenuItemCode = in_array($this->action, ['reorder', 'import', 'export'], true)
+            ? $this->action
+            : 'redirects';
+
+        BackendMenu::setContext('Adrenth.Redirect', 'redirect', $sideMenuItemCode);
 
         $this->requiredPermissions = ['adrenth.redirect.access_redirects'];
 
@@ -75,7 +90,8 @@ class Redirects extends Controller
      *
      * @param int $recordId The model primary key to update.
      * @param string $context Explicitly define a form context.
-     * @return RedirectResponse
+     * @return mixed
+     * @throws ModelNotFoundException
      */
     public function update($recordId = null, $context = null)
     {
@@ -147,12 +163,18 @@ class Redirects extends Controller
             $field = $host->getField($disableField);
             $field->disabled = $host->model->getAttribute('system');
         }
+
+        if (in_array((int) $host->model->getAttribute('status_code'), [404, 410], true)) {
+            /** @var FormField $field */
+            $field = $host->getField('to_url');
+            $field->cssClass = 'hidden';
+        }
     }
 
     /**
      * Test Input Path
      *
-     * @throws \ApplicationException
+     * @throws ApplicationException
      */
     public function onTest()
     {
@@ -167,8 +189,8 @@ class Redirects extends Controller
             $manager->setMatchDate($testDate);
 
             $match = $manager->match($inputPath);
-        } catch (\Exception $e) {
-            throw new \ApplicationException($e->getMessage());
+        } catch (Exception $e) {
+            throw new ApplicationException($e->getMessage());
         }
 
         return [
@@ -204,16 +226,17 @@ class Redirects extends Controller
         foreach ($checkedIds as $checkedId) {
             /** @var RequestLog $requestLog */
             $requestLog = RequestLog::find($checkedId);
-            $path = parse_url($requestLog->getAttribute('url'), PHP_URL_PATH);
 
-            if ($path === false || $path === '/' || $path === '') {
+            $url = $this->parseRequestLogItemUrl($requestLog->getAttribute('url'));
+
+            if ($url === '') {
                 continue;
             }
 
             Redirect::create([
                 'match_type' => Redirect::TYPE_EXACT,
                 'target_type' => Redirect::TARGET_TYPE_PATH_URL,
-                'from_url' => $path,
+                'from_url' => $url,
                 'to_url' => '/',
                 'status_code' => 301,
                 'is_enabled' => false,
@@ -270,6 +293,30 @@ class Redirects extends Controller
         }
 
         return [];
+    }
+
+    /**
+     * @param string $url
+     * @return string
+     */
+    private function parseRequestLogItemUrl($url)
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+
+        if ($path === false || $path === '/' || $path === '') {
+            return '';
+        }
+
+        // Using `parse_url($url, PHP_URL_QUERY)` will result in a string of sorted query params (2.0.23):
+        // e.g ?a=z&z=a becomes ?z=a&a=z
+        // So let's just grab the query part using string functions to make sure whe have the exact query string.
+        $questionMarkPosition = strpos($url, '?');
+
+        if ($questionMarkPosition !== false) {
+            $path .= substr($url, $questionMarkPosition);
+        }
+
+        return $path;
     }
 
     /**

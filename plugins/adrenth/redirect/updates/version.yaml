@@ -58,3 +58,11 @@
     - Add redirect log
     - create_redirect_logs_table.php
 2.0.16: Add spanish language (gracias arzola)
+2.0.17: Minor fixes and code optimization
+2.0.18: Add redirect statistics (WIP) (please submit your ideas!)
+2.0.19: Fix SQLite compatibility issues (thanks jan-vince)
+2.0.20: Add HTTP status code 410 (Gone) (requested by jan-vince)
+2.0.21: Add HTTP status code 303 (See Other) (requested by ayumihamsaki) and some small fixes.
+2.0.22: Add Russian language and fix backend menu navigation issue (спасибо sheck87)
+2.0.23: Add missing query part of the URL when creating a Redirect from Request Log
+2.0.24: Minor fixes and code optimization

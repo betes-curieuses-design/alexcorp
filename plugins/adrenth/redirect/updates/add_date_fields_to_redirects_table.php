@@ -3,8 +3,8 @@
 namespace Adrenth\Redirect\Updates;
 
 use Illuminate\Database\Schema\Blueprint;
-use Schema;
 use October\Rain\Database\Updates\Migration;
+use Schema;
 
 /**
  * Class AddDateFieldsToRedirectsTable
@@ -26,8 +26,7 @@ class AddDateFieldsToRedirectsTable extends Migration
     public function down()
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->dropColumn('from_date');
-            $table->dropColumn('to_date');
+            $table->dropColumn(['from_date', 'to_date']);
         });
     }
 }
