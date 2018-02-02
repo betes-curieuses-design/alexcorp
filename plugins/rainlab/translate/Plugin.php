@@ -80,12 +80,31 @@ class Plugin extends PluginBase
                 ->pruneTranslatedContentTemplates($templates)
             ;
         });
+
+        /*
+         * Look at session for locale using middleware
+         */
+        \Cms\Classes\CmsController::extend(function($controller) {
+            $controller->middleware(\RainLab\Translate\Classes\LocaleMiddleware::class);
+        });
+
+        /**
+         * Append current locale to static page's cache keys
+         */
+        $modifyKey = function (&$key) {
+            $key = $key . '-' . Lang::getLocale();
+        };
+        Event::listen('pages.router.getCacheKey', $modifyKey);
+        Event::listen('pages.page.getMenuCacheKey', $modifyKey);
+        Event::listen('pages.snippet.getMapCacheKey', $modifyKey);
+        Event::listen('pages.snippet.getPartialMapCacheKey', $modifyKey);
     }
 
     public function registerComponents()
     {
         return [
-           'RainLab\Translate\Components\LocalePicker' => 'localePicker'
+           'RainLab\Translate\Components\LocalePicker' => 'localePicker',
+           'RainLab\Translate\Components\AlternateHrefLangElements' => 'alternateHrefLangElements'
         ];
     }
 

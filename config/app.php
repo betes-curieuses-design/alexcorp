@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost/allianceeducation.ca/alexcorp-v2/',
+    'url' => 'http://localhost/alexcorp/',
 
     /*
     |--------------------------------------------------------------------------
@@ -81,9 +81,9 @@ return [
     |
     */
 
-    'key' => 'KO4H6IDbZxvxgbNm',
+    'key' => 'YTBtbMv7fEWMgSgbe9wz3WXwwEeORqI5',
 
-    'cipher' => MCRYPT_RIJNDAEL_128,
+    'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
