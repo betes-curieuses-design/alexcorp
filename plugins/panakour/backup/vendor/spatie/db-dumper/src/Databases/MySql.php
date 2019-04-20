@@ -23,6 +23,12 @@ class MySql extends DbDumper
     /** @var bool */
     protected $dbNameWasSetAsExtraOption = false;
 
+    /** @var string */
+    protected $setGtidPurged = 'AUTO';
+
+    /** @var bool */
+    protected $createTables = true;
+
     public function __construct()
     {
         $this->port = 3306;
@@ -101,6 +107,16 @@ class MySql extends DbDumper
     }
 
     /**
+     * @return $this
+     */
+    public function setGtidPurged(string $setGtidPurged)
+    {
+        $this->setGtidPurged = $setGtidPurged;
+
+        return $this;
+    }
+
+    /**
      * Dump the contents of the database to the given file.
      *
      * @param string $dumpFile
@@ -140,6 +156,16 @@ class MySql extends DbDumper
     }
 
     /**
+     * @return $this
+     */
+    public function doNotCreateTables()
+    {
+        $this->createTables = false;
+
+        return $this;
+    }
+
+    /**
      * Get the command that should be performed to dump the database.
      *
      * @param string $dumpFile
@@ -155,6 +181,10 @@ class MySql extends DbDumper
             "{$quote}{$this->dumpBinaryPath}mysqldump{$quote}",
             "--defaults-extra-file=\"{$temporaryCredentialsFile}\"",
         ];
+
+        if (! $this->createTables) {
+            $command[] = '--no-create-info';
+        }
 
         if ($this->skipComments) {
             $command[] = '--skip-comments';
@@ -182,7 +212,9 @@ class MySql extends DbDumper
             $command[] = $extraOption;
         }
 
-        $command[] = "--result-file=\"{$dumpFile}\"";
+        if ($this->setGtidPurged !== 'AUTO') {
+            $command[] = '--set-gtid-purged='.$this->setGtidPurged;
+        }
 
         if (! $this->dbNameWasSetAsExtraOption) {
             $command[] = $this->dbName;
@@ -193,7 +225,7 @@ class MySql extends DbDumper
             $command[] = "--tables {$includeTables}";
         }
 
-        return implode(' ', $command);
+        return $this->echoToFile(implode(' ', $command), $dumpFile);
     }
 
     public function getContentsOfCredentialsFile(): string

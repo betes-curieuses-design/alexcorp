@@ -1,0 +1,59 @@
+1555772054a:1:{s:11:"offline.htm";a:8:{s:8:"fileName";s:11:"offline.htm";s:7:"content";s:1540:"title = "Site Maintenance"
+url = "/offline"
+description = "Site Maintenance page"
+==
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Corlate Maintenance">
+<meta name="keywords" content="business, corporate, portfolio, blog, responsive, bootstrap">
+<meta name="author" content="JoomShaper and József Tamás Herczeg">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>{{ this.page.title }} | {{ this.theme.site_name }}</title>
+<link href="{{ ['assets/css/offline.css']|theme }}" rel="stylesheet">
+<!-- favicon -->
+<link rel="shortcut icon" href="{{ 'assets/images/ico/favicon.ico'|theme }}">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ 'assets/images/ico/apple-touch-icon-144-precomposed.png'|theme }}">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ 'assets/images/ico/apple-touch-icon-114-precomposed.png'|theme }}">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ 'assets/images/ico/apple-touch-icon-72-precomposed.png'|theme }}">
+<link rel="apple-touch-icon-precomposed" href="{{ 'assets/images/ico/apple-touch-icon-57-precomposed.png'|theme }}">
+</head>
+<body>
+<div id="border">
+<div>
+	<img src="{{ 'assets/images/alexfoisy_logo.png'|theme }}" alt="logo"><br/>
+</div>	
+<h2>Maintenance en cours!</h2>
+	<p>Ce site Web est actuellement en maintenance<br>Revenez très bientôt!</p>
+</div>
+</body>
+</html>";s:5:"mtime";i:1517016571;s:6:"markup";s:1455:"<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Corlate Maintenance">
+<meta name="keywords" content="business, corporate, portfolio, blog, responsive, bootstrap">
+<meta name="author" content="JoomShaper and József Tamás Herczeg">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>{{ this.page.title }} | {{ this.theme.site_name }}</title>
+<link href="{{ ['assets/css/offline.css']|theme }}" rel="stylesheet">
+<!-- favicon -->
+<link rel="shortcut icon" href="{{ 'assets/images/ico/favicon.ico'|theme }}">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ 'assets/images/ico/apple-touch-icon-144-precomposed.png'|theme }}">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ 'assets/images/ico/apple-touch-icon-114-precomposed.png'|theme }}">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ 'assets/images/ico/apple-touch-icon-72-precomposed.png'|theme }}">
+<link rel="apple-touch-icon-precomposed" href="{{ 'assets/images/ico/apple-touch-icon-57-precomposed.png'|theme }}">
+</head>
+<body>
+<div id="border">
+<div>
+	<img src="{{ 'assets/images/alexfoisy_logo.png'|theme }}" alt="logo"><br/>
+</div>	
+<h2>Maintenance en cours!</h2>
+	<p>Ce site Web est actuellement en maintenance<br>Revenez très bientôt!</p>
+</div>
+</body>
+</html>";s:4:"code";N;s:5:"title";s:16:"Site Maintenance";s:3:"url";s:8:"/offline";s:11:"description";s:21:"Site Maintenance page";}}

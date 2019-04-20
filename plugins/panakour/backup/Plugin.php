@@ -13,7 +13,7 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'Backup',
+            'name'        => 'Backup',
             'description' => 'Backup files and database of October CMS',
             'author' => 'Panagiotis Koursaris',
             'icon' => 'icon-floppy-o',
@@ -28,7 +28,9 @@ class Plugin extends PluginBase
                 'label' => 'Backup',
                 'url' => Backend::url('panakour/backup/backups'),
                 'icon' => 'icon-floppy-o',
+                'iconSvg' => 'plugins/panakour/backup/assets/images/backup-icon.svg',
                 'order' => 200,
+                'permissions' => ['panakour.backup.access'],
             ],
         ];
     }
@@ -43,6 +45,17 @@ class Plugin extends PluginBase
                 'category' => SettingsManager::CATEGORY_SYSTEM,
                 'class' => Settings::class,
                 'order' => 600,
+                'permissions' => ['panakour.backup.access'],
+            ],
+        ];
+    }
+
+    public function registerPermissions()
+    {
+        return [
+            'panakour.backup.access' => [
+                'label' => 'Manage backups',
+                'tab' => 'Backup'
             ],
         ];
     }

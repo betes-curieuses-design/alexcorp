@@ -2,10 +2,21 @@
 
 All notable changes to `dropbox-api` will be documented in this file
 
+## 1.7.1 - 2019-02-13
+
+- fix for `createSharedLinkWithSettings` with empty settings
+
+## 1.7.0 - 2019-02-06
+
+- add getter and setter for the access token
+
+## 1.6.6 - 2018-07-19
+
+- fix for piped streams
+
 ## 1.6.5 - 2018-01-15
 
 - adjust `normalizePath` to allow id/rev/ns to be queried
-
 
 ## 1.6.4 - 2017-12-05
 

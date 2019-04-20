@@ -2,6 +2,49 @@
 
 All notable changes to `laravel-backup` will be documented in this file.
 
+# 5.6.5 - 2018-05-01
+
+- only zip files will get threated as backup files
+- drop support for PHP 7.0
+
+# 5.6.4 - 2018-04-30
+
+- gzipping is now handled by db-dumper
+
+# 5.6.3 - 2018-04-26
+
+- fix wrong import
+
+# 5.6.2 - 2018-04-24
+
+- lower storage requirements by removing the dumped database file after gzipping it
+
+# 5.6.1 - 2018-04-13
+
+- improved compatiblity with MariaDB
+- improved compatiblity with Google Drive
+
+# 5.6.0 - 2018-04-03
+- add `icon` and `username` to slack config
+
+# 5.5.1 - 2018-03-17
+- fix French translation
+
+# 5.5.0 - 2018-03-17
+- add Hindi translation
+
+# 5.4.1 - 2018-03-04
+- fix typo
+
+# 5.4.0 - 2018-03-01
+- add turkish translation
+
+# 5.3.0 - 2018-02-26
+- allow filtering on db name
+
+# 5.2.2 - 2018-02-23
+- fix typos in exception messages
+
 # 5.2.1 - 2018-02-08
 - add support for L5.6
 

@@ -1,0 +1,42 @@
+1555772054a:1:{s:13:"blog/blog.htm";a:12:{s:8:"fileName";s:13:"blog/blog.htm";s:7:"content";s:698:"title = "Portfolio"
+url = "/blogue/:page?"
+layout = "default"
+meta_title = ""
+is_hidden = 0
+
+[blogPosts blogs]
+pageNumber = "{{ :page }}"
+postsPerPage = 999
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "blog/categories"
+postPage = "blog/article"
+
+[blogCategories listcategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = "blog/categories"
+==
+<section class="blogsection">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                <h1 class="h2 text-center text-orange">Blogue</h1>
+                </div>
+            </div>
+
+                {% component 'blogs' %}
+
+        </div>
+    </section>";s:5:"mtime";i:1526833161;s:6:"markup";s:309:"<section class="blogsection">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                <h1 class="h2 text-center text-orange">Blogue</h1>
+                </div>
+            </div>
+
+                {% component 'blogs' %}
+
+        </div>
+    </section>";s:4:"code";N;s:5:"title";s:9:"Portfolio";s:3:"url";s:14:"/blogue/:page?";s:6:"layout";s:7:"default";s:10:"meta_title";s:0:"";s:9:"is_hidden";s:1:"0";s:15:"blogPosts blogs";a:6:{s:10:"pageNumber";s:11:"{{ :page }}";s:12:"postsPerPage";s:3:"999";s:14:"noPostsMessage";s:14:"No posts found";s:9:"sortOrder";s:17:"published_at desc";s:12:"categoryPage";s:15:"blog/categories";s:8:"postPage";s:12:"blog/article";}s:29:"blogCategories listcategories";a:3:{s:4:"slug";s:11:"{{ :slug }}";s:12:"displayEmpty";s:1:"0";s:12:"categoryPage";s:15:"blog/categories";}}}

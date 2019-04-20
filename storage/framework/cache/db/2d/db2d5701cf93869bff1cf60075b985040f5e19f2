@@ -1,0 +1,1 @@
+1555857854a:1:{i:0;O:8:"stdClass":3:{s:2:"id";i:9;s:4:"item";s:24:"panakour_backup_settings";s:5:"value";s:238:"{"include_files":[{"path":"themes"},{"path":"plugins"},{"path":"storage"}],"exclude_files":[{"path":"vendor"},{"path":"plugins\/rainlab"}],"filename_prefix":"alexcorp","database_driver":"mysql","gzip_database_dumps":"1","storage":"local"}";}}

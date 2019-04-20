@@ -2,24 +2,20 @@
 
 namespace Spatie\Backup\BackupDestination;
 
+use Spatie\Backup\Helpers\File;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class BackupCollection extends Collection
 {
     /** @var null|int */
     protected $sizeCache = null;
 
-    /**
-     * @param \Illuminate\Contracts\Filesystem\Filesystem|null $disk
-     * @param array                                            $files
-     *
-     * @return \Spatie\Backup\BackupDestination\BackupCollection
-     */
-    public static function createFromFiles($disk, array $files): self
+    public static function createFromFiles(?FileSystem $disk, array $files): self
     {
         return (new static($files))
-            ->filter(function ($path) {
-                return pathinfo($path, PATHINFO_EXTENSION) === 'zip';
+            ->filter(function ($path) use ($disk) {
+                return (new File)->isZipFile($disk, $path);
             })
             ->map(function ($path) use ($disk) {
                 return new Backup($disk, $path);
@@ -30,18 +26,12 @@ class BackupCollection extends Collection
             ->values();
     }
 
-    /**
-     * @return \Spatie\Backup\BackupDestination\Backup|null
-     */
-    public function newest()
+    public function newest(): ?Backup
     {
         return $this->first();
     }
 
-    /**
-     * @return \Spatie\Backup\BackupDestination\Backup|null
-     */
-    public function oldest()
+    public function oldest(): ?Backup
     {
         return $this
             ->filter->exists()
