@@ -1,0 +1,45 @@
+title = "Accueil"
+url = "/"
+layout = "default"
+description = "Portfolio Web du designer graphique Alexandre Foisy."
+meta_title = "Portfolio d'Alexandre Foisy | Designer Graphique"
+meta_description = "Portfolio Web du designer graphique Alexandre Foisy."
+is_hidden = 0
+
+[Worklist]
+
+[testimonials]
+
+[simpleContact simpleContact]
+nameTitle = "Votre nom et prénom"
+emailTitle = "Courriel"
+phoneTitle = "Téléphone"
+subjectTitle = "Sujet"
+messageTitle = "Message"
+buttonText = "Soumettre"
+displayPhone = 1
+==
+<section id="portfolio" class="miniporfolio">
+    <div class="container">
+        <h2 class="h2-responsive text-underline text-primary text-center mb-5 wow fadeInDown">
+            Mes créations
+        </h2>
+        {% component 'Worklist' %}
+    </div>
+</section>
+<section id="aboutme" class="intro">
+    {% partial "home/features" %}
+</section>
+<section id="skills" class="skills">
+    {% partial "home/skills" %}
+</section>
+
+<section id="testimonial">
+    <div class="container wow fadeInDown">
+        {% component 'testimonials' %}
+    </div>
+</section>
+<section id="contact" class="contact">
+    {% partial 'home/contact' %}
+</section>
+

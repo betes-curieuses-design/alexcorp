@@ -1,0 +1,80 @@
+description = "Default Layout"
+
+[localePicker language]
+forceUrl = 0
+==
+<!DOCTYPE html>
+<html>
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-70359045-5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-70359045-5');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Portfolio d'Alexandre Foisy - {{ this.page.title|_ }}</title>
+    <meta name="google-site-verification" content="r9dMKr9Xx2ryKMGP6Wg20WTKsjJYjMZsa2CJxCWXRyk" />
+    <meta name="description" content="{{ this.page.description|_ }}">
+    <meta name="title" content="{{ this.page.title }}">
+    <meta name="author" content="Alexandre Foisy">
+    <meta name="robots" content="index,follow">
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://alexcorp.ca/themes/alexcorp/assets/images/share.jpg" />
+    <meta property="og:title" content="Portfolio d'Alexandre Foisy - {{ this.page.title }}" />
+    <meta property="og:url" content="{{ this.page.url }}" />
+    <meta property="og:site_name" content="Portfolio d'Alexandre Foisy" />
+    <meta property="og:description" content="{{ this.page.settings.meta_description }}" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" type="image/jpg" href="{{ 'assets/images/favicon.png'|theme }}"/>
+    <link href="{{ 'assets/images/apple-touch-icon.png'|theme }}" rel="apple-touch-icon">
+    <link href="{{ 'assets/images/apple-touch-icon-precomposed.png'|theme }}" rel="apple-touch-icon-precomposed">
+    <link href="{{ [
+    'assets/css/theme.css',
+    'assets/vendor/animate/animate.min.css',
+    ]|theme }}" rel="stylesheet">
+    {% styles %}
+</head>
+<body>
+<header>
+    {% partial 'navbar' %}
+</header>
+<main id="page">
+    {% page %}
+</main>
+<footer>
+    {% partial 'footer' %}
+</footer>
+<a id="scrollUp" class="smooth" href="#portfolio" title="Retour vers le haut de la page"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+{% flash %}
+<span id="flash" data-type="{{ type }}" data-message="{{ message }}"></span>
+{% endflash %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ [
+'assets/vendor/wow/dist/wow.js',
+'assets/vendor/popper/popper.js',
+'assets/vendor/tether/dist/js/tether.min.js',
+'assets/vendor/bootstrap/dist/js/bootstrap.min.js',
+'assets/js/main.js',
+]|theme }}"></script>
+<script>
+    $(document).ready(function(){
+        $(".smooth").on('click', function(event) {
+            if (this.hash !== "") {
+                event.preventDefault();
+                var hash = this.hash;
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 800, function(){
+                    window.location.hash = hash;
+                });
+            }
+        });
+    });
+</script>
+{% framework extras %}
+{% scripts %}
+</body>

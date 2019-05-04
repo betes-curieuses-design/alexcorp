@@ -1,18 +1,16 @@
 {% set testimonials =  __SELF__.testimonials %}
 
-<div class="row testimonial">
     {% for testimonial in testimonials %}
-    <div class="col-lg-offset-2 col-lg-10 col-sm-offset-2 col-sm-10 col-xs-offset-0 col-xs-12 all-top-buffer">
-        <div class="col-sm-offset-0 col-sm-3 col-xs-offset-3 col-xs-6">
-            <img class="img-responsive round-image" src="{{ testimonial.avatar.path }}" alt="">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-lg-2 text-center">
+            <img class="rounded-circle" src="{{ testimonial.avatar.path }}" alt="">
         </div>
-        <div class="col-lg-6 col-sm-6 col-xs-12">
-            {{ testimonial.content|raw }}
-            {% if testimonial.author %}
-            <p class="who">- {{ testimonial.author }}</p>
+        <div class="col-sm-12 col-lg-6">
+            <p>{{ testimonial.content|raw }}
+            {% if testimonial.author %}</p>
+            <small class="white">- {{ testimonial.author }}</small>
             {% endif %}
         </div>
     </div>
     {% endfor %}
-</div>
 

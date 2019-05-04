@@ -1,0 +1,13 @@
+.alert-primary {
+  color: $primary-color;
+  background-color: #d3bddf;
+  border-color: #806991; }
+.alert-primary hr {
+  border-top-color: #806991; }
+.alert-primary .alert-link {
+  color: #530191; }
+
+.form-control{
+  border-color: $primary-color;
+  resize: none;
+}

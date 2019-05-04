@@ -1,0 +1,104 @@
+@include media-breakpoint-down(xs) {
+  .home-cover {
+    .cover-image {
+      height: 200px;
+      .form-search-content {
+        margin-top: 80px;
+      }
+    }
+  }
+
+}
+
+@include media-breakpoint-up(md) {
+  .home-cover {
+    .cover-image {
+      height: 300px;
+      .form-search-content {
+        margin-top: 100px;
+      }
+    }
+  }
+
+}
+
+@include media-breakpoint-up(lg) {
+  .home-cover {
+    .cover-image {
+      height: 400px;
+      .form-search-content {
+        margin-top: 120px;
+      }
+    }
+  }
+
+}
+
+@include media-breakpoint-up(xl) {
+  .home-cover {
+    .cover-image {
+      height: 600px;
+      .form-search-content {
+        margin-top: 200px;
+      }
+    }
+  }
+
+}
+
+.carousel-indicators{
+  bottom: 30px!important;
+}
+.carousel-indicators .active {
+  background-color: $primary-color;
+}
+
+.carousel-indicators li {
+  height: 5px!important;
+  width: 40px!important;
+}
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+.message{
+  background: $primary-color;
+}
+.intro {
+  background: url('../images/me_snow.jpg');
+  background-size: cover;
+  background-attachment: fixed, fixed;
+  background-position: top left, center center;
+  padding-top: 300px;
+  padding-bottom: 300px;
+  color: $white;
+}
+#content-box{
+  color: $white;
+  background: $gray-color;
+  padding: 3.5em 2.5em 3.5em 2.5em;
+}
+hr {
+  border: 0;
+  border-top: 1px solid $white;
+}
+//About//
+.skills {
+  background: $white url('../images/competence.gif');
+  background-size: cover;
+  background-position: top left, center center;
+}
+
+#testimonial {
+  background: $gray-color;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+#testimonial .carousel-inner{
+  overflow: visible!important;
+}
+.miniporfolio{
+  padding-top: 8rem;
+}

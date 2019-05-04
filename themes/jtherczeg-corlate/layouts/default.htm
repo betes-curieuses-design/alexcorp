@@ -1,6 +1,6 @@
 description = "Default Layout"
 
-[simpleContact]
+[simpleContact simpleContact]
 nameTitle = "Votre nom et prénom"
 emailTitle = "Courriel"
 phoneTitle = "Téléphone"
@@ -12,14 +12,20 @@ displayPhone = 1
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-70359045-5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-70359045-5');
+    </script>
     <meta charset="utf-8">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ this.page.meta_description }}">
     <meta name="author" content="Alexandre Foisy">
     <title>{{ this.page.title }}</title>
-	
-	<!-- core CSS -->
 	{% styles %}
 	<link href="{{ ['assets/css/bootstrap.min.css',
 		'assets/css/font-awesome.min.css',
@@ -29,17 +35,12 @@ displayPhone = 1
 	]|theme }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ 'assets/images/ico/favicon.ico'|theme }}">
     <link rel="apple-touch-icon-precomposed" href="{{ 'assets/images/ico/apple-touch-icon-precomposed.png'|theme }}">
-</head><!--/head-->
-
+</head>
 <body class="homepage">
-
 <header id="header">
         {% partial "nav" %}
-</header><!--/header-->
-
+</header>
     {% page %}
-
-<!--Contact form-->
 <section id="_contact">
     <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
         <div class="row">
@@ -51,14 +52,11 @@ displayPhone = 1
             </div>
         </div>
     </div>
-</section><!--/#bottom-->
-
+</section>
 <footer id="footer">
 	{% partial "footer" %}
-</footer><!--/#footer-->
+</footer>
 <a id="scrollUp" href="#_home" title="Retour vers le haut de la page"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-
-<!-- Scripts -->
 <script type="text/javascript" src="{{ 'assets/js/html5shiv.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/respond.min.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/jquery.js'|theme }}"></script>
@@ -66,25 +64,7 @@ displayPhone = 1
 <script type="text/javascript" src="{{ 'assets/js/jquery.isotope.min.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/main.js'|theme }}"></script>
 <script type="text/javascript" src="{{ 'assets/js/wow.min.js'|theme }}"></script>
-<script>
-    //Smoothscroll
-    $(function() {
-        $('a[href*="#_"]:not([href="#_"])').click(function() {
-            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                if (target.length) {
-                    $('html, body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    </script>
 {% framework extras %}
-{% scripts %}             
-         
+{% scripts %}
 </body>
 </html>

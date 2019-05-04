@@ -1,0 +1,26 @@
+[blogPosts blogs]
+pageNumber = "{{ :page }}"
+postsPerPage = 4
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "blog/categories"
+postPage = "blog/article"
+
+==
+<section class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="h2-responsive text-underline text-primary">
+                    Mes dernières créations
+                </h2>
+                {% component 'blogs' %}
+            </div>
+            <div class="col-12 mt-5 ">
+                <a href="{{ 'blog/blogList'|page }}" role="button" class="btn btn-dark float-right">
+                    Visualisé mon portfolio
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

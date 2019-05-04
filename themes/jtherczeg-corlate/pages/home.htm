@@ -15,21 +15,18 @@ is_hidden = 0
 <section id="_home" class="no-margin">
 	{% component 'ShowImages' %}
 </section>
-
 <section id="_about">
 	{% partial "features" %}
 </section>
-
 <section id="_competance">
     {% partial "services" %}
 </section>
-
 <section id="_portfolio">
 	<div class="container">
             <div class="center wow fadeInDown">
                 <h2 style="padding-top: 40px ;">Portfolio</h2>
             </div>
-{% component 'Worklist' %}
+            {% component 'Worklist' %}
         </div><!--/.container-->
 </section>
 
