@@ -51,6 +51,16 @@ class BackupJob
         return $this;
     }
 
+    public function onlyDbName(array $allowedDbNames): self
+    {
+        $this->dbDumpers = $this->dbDumpers->filter(
+            function (DbDumper $dbDumper, string $connectionName) use ($allowedDbNames) {
+                return in_array($connectionName, $allowedDbNames);
+            });
+
+        return $this;
+    }
+
     public function dontBackupDatabases(): self
     {
         $this->dbDumpers = new Collection();
@@ -218,17 +228,14 @@ class BackupJob
 
             $fileName = "{$dbType}-{$dbName}.sql";
 
+            if (config('backup.backup.gzip_database_dump')) {
+                $fileName .= '.gz';
+                $dbDumper->enableCompression();
+            }
+
             $temporaryFilePath = $this->temporaryDirectory->path('db-dumps'.DIRECTORY_SEPARATOR.$fileName);
 
             $dbDumper->dumpToFile($temporaryFilePath);
-
-            if (config('backup.backup.gzip_database_dump')) {
-                consoleOutput()->info("Gzipping {$dbDumper->getDbName()}...");
-
-                $compressedDumpPath = Gzip::compress($temporaryFilePath);
-
-                return $compressedDumpPath;
-            }
 
             return $temporaryFilePath;
         })->toArray();

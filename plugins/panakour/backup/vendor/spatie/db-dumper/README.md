@@ -3,7 +3,6 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/db-dumper.svg?style=flat-square)](https://packagist.org/packages/spatie/db-dumper)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/spatie/db-dumper/master.svg?style=flat-square)](https://travis-ci.org/spatie/db-dumper)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/bd8dcd6b-19db-4d65-9cdd-3b6ecb2626b1.svg?style=flat-square)](https://insight.sensiolabs.com/projects/bd8dcd6b-19db-4d65-9cdd-3b6ecb2626b1)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/db-dumper.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/db-dumper)
 [![StyleCI](https://styleci.io/repos/49829051/shield?branch=master)](https://styleci.io/repos/49829051)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/db-dumper.svg?style=flat-square)](https://packagist.org/packages/spatie/db-dumper)
@@ -14,6 +13,7 @@ the scenes `mysqldump`, `pg_dump`, `sqlite3` and `mongodump` are used.
 Here's are simple examples of how to create a database dump with different drivers:
 
 **MySQL**
+
 ```php
 Spatie\DbDumper\Databases\MySql::create()
     ->setDbName($databaseName)
@@ -47,7 +47,6 @@ Spatie\DbDumper\Databases\MongoDb::create()
     ->setDbName($databaseName)
     ->setUserName($userName)
     ->setPassword($password)
-    ->enableCompression()
     ->dumpToFile('dump.gz');
 ```
 
@@ -148,7 +147,15 @@ Spatie\DbDumper\Databases\MySql::create()
     ->dumpToFile('dump.sql');
 ```
 
-
+### Do not write CREATE TABLE statements that create each dumped table.
+```php
+$dumpCommand = MySql::create()
+    ->setDbName('dbname')
+    ->setUserName('username')
+    ->setPassword('password')
+    ->doNotCreateTables()
+    ->getDumpCommand('dump.sql', 'credentials.txt');
+```
 
 ### Adding extra options
 If you want to add an arbitrary option to the dump command you can use `addExtraOption`
@@ -175,7 +182,53 @@ $dumpCommand = MySql::create()
 
 Please note that using the `->addExtraOption('--databases dbname')` will override the database name set on a previous `->setDbName()` call.
 
+### Using compression
+If you want to compress the outputted file, you can use one of the compressors and the resulted dump file will be compressed.
 
+There is one compressor that comes out of the box: `GzipCompressor`. It will compress your db dump with `gzip`. Make sure `gzip` is installed on your system before using this.
+
+```php
+$dumpCommand = MySql::create()
+    ->setDbName('dbname')
+    ->setUserName('username')
+    ->setPassword('password')
+    ->useCompressor(new GzipCompressor())
+    ->dumpToFile('dump.sql.gz');
+```
+
+### Creating your own compressor
+
+You can create you own compressor implementing the `Compressor` interface. Here's how that interface looks like:
+
+```php
+namespace Spatie\DbDumper\Compressors;
+
+interface Compressor
+{
+    public function useCommand(): string;
+    
+    public function useExtension(): string;
+}
+```
+
+The `useCommand` should simply return the compression command the db dump will get pumped to. Here's the implementation of `GzipCompression`.
+
+```php
+namespace Spatie\DbDumper\Compressors;
+
+class GzipCompressor implements Compressor
+{
+    public function useCommand(): string
+    {
+        return 'gzip';
+    }
+    
+    public function useExtension(): string
+    {
+        return 'gz';
+    }
+}
+```
 
 ## Changelog
 
@@ -214,7 +267,7 @@ Initial PostgreSQL support was contributed by [Adriano Machado](https://github.c
 
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie).
 All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License

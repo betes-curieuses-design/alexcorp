@@ -76,4 +76,6 @@
   'mohsin\\carousel\\Controllers\\carousels' => 'plugins/mohsin/carousel/controllers/carousels.php',
   'RainLab\\Blog\\Models\\Post' => 'plugins/rainlab/blog/models/Post.php',
   'RainLab\\Blog\\Models\\Category' => 'plugins/rainlab/blog/models/Category.php',
+  'RainLab\\Translate\\FormWidgets\\MLTextarea' => 'plugins/rainlab/translate/formwidgets/MLTextarea.php',
+  'RainLab\\Translate\\Behaviors\\TranslatablePage' => 'plugins/rainlab/translate/behaviors/TranslatablePage.php',
 );

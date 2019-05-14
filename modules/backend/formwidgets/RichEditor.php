@@ -29,7 +29,7 @@ class RichEditor extends FormWidgetBase
     /**
      * @var boolean Determines whether content has HEAD and HTML tags.
      */
-    public $toolbarButtons = null;
+    public $toolbarButtons;
 
     /**
      * @var boolean If true, the editor is set to read-only mode
@@ -90,6 +90,7 @@ class RichEditor extends FormWidgetBase
         $this->vars['allowTags'] = EditorSetting::getConfigured('html_allow_tags');
         $this->vars['noWrapTags'] = EditorSetting::getConfigured('html_no_wrap_tags');
         $this->vars['removeTags'] = EditorSetting::getConfigured('html_remove_tags');
+        $this->vars['lineBreakerTags'] = EditorSetting::getConfigured('html_line_breaker_tags');
 
         $this->vars['imageStyles'] = EditorSetting::getConfiguredStyles('html_style_image');
         $this->vars['linkStyles'] = EditorSetting::getConfiguredStyles('html_style_link');
@@ -128,6 +129,7 @@ class RichEditor extends FormWidgetBase
     {
         $this->addCss('css/richeditor.css', 'core');
         $this->addJs('js/build-min.js', 'core');
+        $this->addJs('js/build-plugins-min.js', 'core');
         $this->addJs('/modules/backend/formwidgets/codeeditor/assets/js/build-min.js', 'core');
 
         if ($lang = $this->getValidEditorLang()) {
@@ -221,6 +223,13 @@ class RichEditor extends FormWidgetBase
                 $baseUrl = Request::getSchemeAndHttpHost();
                 if (strpos($linkUrl, $baseUrl) === 0) {
                     $linkUrl = substr($linkUrl, strlen($baseUrl));
+                }
+
+                /*
+                 * Root page fallback.
+                 */
+                if (strlen($linkUrl) === 0) {
+                    $linkUrl = '/';
                 }
 
                 $linkName = str_repeat('&nbsp;', $level * 4);

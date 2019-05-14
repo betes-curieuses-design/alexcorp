@@ -2,6 +2,30 @@
 
 All notable changes to `db-dumper` will be documented in this file
 
+## 2.12.0 - 2018-12-10
+
+- add `doNotCreateTables`
+
+## 2.11.1 - 2018-09-27
+
+- add `useExtension`
+
+## 2.11.0 - 2018-09-26
+
+- add `Compressor`
+
+## 2.10.1 - 2018-08-30
+
+- allow destination paths to have a space character
+
+## 2.10.0 - 2018-04-27
+
+- add support for compressing dumps
+
+## 2.9.0 - 2018-03-05
+
+- add support for setting `--set-gtid-purged`
+
 ## 2.8.2 - 2018-01-20
 
 - add support for Symfony 4
