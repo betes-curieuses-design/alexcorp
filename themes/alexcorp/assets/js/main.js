@@ -7,25 +7,23 @@ if (hamburgers.length > 0) {
         }, false);
     });
 }
-jQuery(function($) {'use strict',
-
-    //Initiat WOW JS
-    new WOW().init();
-
-    // accordian
-    $('.accordion-toggle').on('click', function(){
-        $(this).closest('.panel-group').children().each(function(){
-            $(this).find('>.panel-heading').removeClass('active');
-        });
-
-        $(this).closest('.panel-heading').toggleClass('active');
-    });
-
-    //goto top
-    $('.gototop').click(function(event) {
-        event.preventDefault();
-        $('html, body').animate({
-            scrollTop: $("body").offset().top
-        }, 500);
+new WOW().init();
+$('.gototop').click(function(event) {
+    event.preventDefault();
+    $('html, body').animate({
+        scrollTop: $("body").offset().top
+    }, 500);
+});
+$(document).ready(function(){
+    $(".smooth").on('click', function(event) {
+        if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 800, function(){
+                window.location.hash = hash;
+            });
+        }
     });
 });
