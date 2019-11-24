@@ -5,9 +5,9 @@
 .work-section__title {
   display: block;
   margin: 0px auto 20px;
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-size: 15px!important;
-  background-color: #E1523D;
+  background-color: #00B5C8;
   text-align: center;
   color: #fff;
   padding: 10px;
@@ -106,9 +106,9 @@
 
 .work__title {
   font-size: 25px;
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-weight: 300;
-  color: #E1523D;
+  color: #00B5C8;
   margin: 0 0 15px;
 }
 .work__title a {
@@ -121,7 +121,7 @@
 }
 
 .work__subtitle {
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-weight: 300;
   font-size: 16px;
   margin: 0 0 15px;
@@ -139,7 +139,7 @@
   -o-transition: background-color 0.2s, color 0.2s;
   -webkit-transition: background-color 0.2s, color 0.2s;
   transition: background-color 0.2s, color 0.2s;
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-size: 18px;
   font-weight: 300;
   display: block;
@@ -156,9 +156,8 @@
   }
 }
 .work__button:hover {
-  background-color: #E1523D;
-  background-color: #E1523D;
-  color: #fff;
+  color: #fff!important;
+  background-color: #00B5C8;
   text-decoration: none;
 }
 
@@ -254,8 +253,8 @@
 }
 
 .work-detail__title {
-  color: #E1523D;
-  font-family: 'Overpass', sans-serif !important;
+  color: #00B5C8;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-weight: 300;
   font-size: 45px;
 }
@@ -267,7 +266,7 @@
 }
 
 .work-detail__categories {
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-size: 14px;
   line-height: 16px;
   margin: 10px 0;
@@ -290,9 +289,9 @@
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  background: #E1523D;
+  background: #00B5C8;
   padding: 10px 20px;
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-size: 16px;
   color: #fff;
   text-transform: uppercase;
@@ -308,17 +307,17 @@
   -o-transition: color 0.2s ease-out, background-color 0.2s ease-out;
   -webkit-transition: color 0.2s ease-out, background-color 0.2s ease-out;
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
-  border: 1px solid #E1523D;
-  font-family: 'Overpass', sans-serif !important;
+  border: 1px solid #00B5C8;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-weight: 400;
   font-size: 25px;
   padding: 8px 20px;
-  color: #E1523D;
+  color: #00B5C8;
   text-decoration: none;
   margin: 20px 0 0;
 }
 .work-detail__link:hover {
-  background: #E1523D;
+  background: #00B5C8;
   color: #fff;
   text-decoration: none;
 }
@@ -328,18 +327,18 @@
   border-bottom: 1px solid #b1b1b1;
   padding: 20px 0;
   color: #4c4c4c;
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-size: 16px;
   margin: 20px 0 0;
 }
 .work-detail__longdesc p {
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-size: 16px;
   margin: 0 0 15px;
 }
 
 .stripe-loading-indicator .stripe, .stripe-loading-indicator .stripe-loaded {
-  background: #E1523D !important;
+  background: #00B5C8 !important;
 }
 
 .work-categories {
@@ -364,12 +363,12 @@
   text-align: center;
   cursor: pointer;
   text-transform: uppercase;
-  font-family: 'Overpass', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
   font-size: 16px;
   line-height: 18px;
   margin: 0 1% 15px;
 }
 .work-category.selected, .work-category:hover {
-  background-color: #E1523D;
+  background-color: #00B5C8;
   color: #fff;
 }

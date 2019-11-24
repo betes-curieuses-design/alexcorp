@@ -1,0 +1,43 @@
+1574630523a:1:{s:10:"footer.htm";a:6:{s:8:"fileName";s:10:"footer.htm";s:7:"content";s:865:"description = "Footer"
+==
+<section id="footer">
+    <div class="container">
+    <div class="row">
+        <div class="col-12 text-center text-white">
+            <p style="display: inline-block">
+                Me suivre sur :
+            </p>
+            </a>&nbsp;&nbsp;&nbsp;
+            <a href="https://www.linkedin.com/in/alexandre-foisy" class="text-white" target="_blank">
+            <i class="fa fa-linkedin fa-lg" aria-hidden="true"></i>
+            </a>&nbsp;&nbsp;
+            <a href="http://pinterest.com/alexfoisy/" class="text-white" target="_blank">
+                <i class="fa fa-pinterest fa-lg" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-12 text-center text-white">
+            <p>&copy; Alexandre Foisy, 2012 - {{ "now"|date("Y") }}</p>
+        </div>
+    </div>
+    </div>
+</section>";s:5:"mtime";i:1564082340;s:6:"markup";s:839:"<section id="footer">
+    <div class="container">
+    <div class="row">
+        <div class="col-12 text-center text-white">
+            <p style="display: inline-block">
+                Me suivre sur :
+            </p>
+            </a>&nbsp;&nbsp;&nbsp;
+            <a href="https://www.linkedin.com/in/alexandre-foisy" class="text-white" target="_blank">
+            <i class="fa fa-linkedin fa-lg" aria-hidden="true"></i>
+            </a>&nbsp;&nbsp;
+            <a href="http://pinterest.com/alexfoisy/" class="text-white" target="_blank">
+                <i class="fa fa-pinterest fa-lg" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-12 text-center text-white">
+            <p>&copy; Alexandre Foisy, 2012 - {{ "now"|date("Y") }}</p>
+        </div>
+    </div>
+    </div>
+</section>";s:4:"code";N;s:11:"description";s:6:"Footer";}}
