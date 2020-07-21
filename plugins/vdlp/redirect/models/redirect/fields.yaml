@@ -60,14 +60,22 @@ fields:
         dependsOn:
             - target_type
             - status_code
-
 tabs:
     defaultTab: vdlp.redirect::lang.tab.tab_general
+    lazy:
+        - vdlp.redirect::lang.tab.tab_logs
+    icons:
+        vdlp.redirect::lang.tab.tab_general: icon-mouse-pointer
+        vdlp.redirect::lang.tab.tab_requirements:
+        vdlp.redirect::lang.tab.tab_test: icon-bug
+        vdlp.redirect::lang.tab.tab_scheduling: icon-calendar-o
+        vdlp.redirect::lang.tab.tab_test_lab: icon-flask
+        vdlp.redirect::lang.tab.tab_advanced: icon-cog
+        vdlp.redirect::lang.tab.tab_logs: icon-file-text-o
     fields:
         #
         # General
         #
-
         is_enabled:
             label: vdlp.redirect::lang.redirect.enabled
             comment: vdlp.redirect::lang.redirect.enabled_comment
@@ -89,11 +97,23 @@ tabs:
             label: vdlp.redirect::lang.redirect.description
             span: right
             type: text
+        ignore_case:
+            label: vdlp.redirect::lang.redirect.ignore_case
+            type: checkbox
+            span: left
+            default: false
+            comment: vdlp.redirect::lang.redirect.ignore_case_comment
         sort_order:
             label: vdlp.redirect::lang.redirect.priority
             type: text
             span: right
             context: update
+        ignore_trailing_slash:
+            label: vdlp.redirect::lang.redirect.ignore_trailing_slash
+            type: checkbox
+            span: left
+            default: false
+            comment: vdlp.redirect::lang.redirect.ignore_trailing_slash_comment
 
         #
         # Requirements
@@ -163,6 +183,7 @@ tabs:
             type: datepicker
             mode: date
             span: left
+            ignoreTimezone: true
         to_date:
             tab: vdlp.redirect::lang.tab.tab_scheduling
             label: vdlp.redirect::lang.scheduling.to_date
@@ -170,6 +191,7 @@ tabs:
             type: datepicker
             mode: date
             span: right
+            ignoreTimezone: true
         #
         # TestLab
         #
@@ -193,6 +215,12 @@ tabs:
                 action: show
                 field: match_type
                 condition: value[placeholders]
+        #
+        # Logs
+        #
+        tab_logs:
+            tab: vdlp.redirect::lang.tab.tab_logs
+            type: partial
         #
         # Advanced
         #
@@ -221,7 +249,6 @@ tabs:
                 https: https
                 auto: vdlp.redirect::lang.redirect.scheme_auto
             dependsOn: status_code
-
 secondaryTabs:
     fields:
         _statistics@update:

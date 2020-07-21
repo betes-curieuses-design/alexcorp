@@ -290,6 +290,10 @@ class RelationController extends ControllerBehavior
         }
 
         $this->controller->pageAction();
+        if ($fatalError = $this->controller->getFatalError()) {
+            throw new ApplicationException($fatalError);
+        }
+
         $this->validateField();
         $this->prepareVars();
         $this->initialized = true;
@@ -320,17 +324,16 @@ class RelationController extends ControllerBehavior
         }
 
         if (!$this->model) {
-            throw new ApplicationException(Lang::get(
-                'backend::lang.relation.missing_model',
-                ['class'=>get_class($this->controller)]
-            ));
+            throw new ApplicationException(Lang::get('backend::lang.relation.missing_model', [
+                'class' => get_class($this->controller),
+            ]));
         }
 
         if (!$this->model instanceof Model) {
-            throw new ApplicationException(Lang::get(
-                'backend::lang.model.invalid_class',
-                ['model'=>get_class($this->model), 'class'=>get_class($this->controller)]
-            ));
+            throw new ApplicationException(Lang::get('backend::lang.model.invalid_class', [
+                'model' => get_class($this->model),
+                'class' => get_class($this->controller),
+            ]));
         }
 
         if (!$this->getConfig($field)) {
@@ -667,6 +670,7 @@ class RelationController extends ControllerBehavior
             $config->recordsPerPage = $this->getConfig('view[recordsPerPage]');
             $config->showCheckboxes = $this->getConfig('view[showCheckboxes]', !$this->readOnly);
             $config->recordUrl = $this->getConfig('view[recordUrl]', null);
+            $config->customViewPath = $this->getConfig('view[customViewPath]', null);
 
             $defaultOnClick = sprintf(
                 "$.oc.relationBehavior.clickViewListRecord(':%s', '%s', '%s')",
@@ -707,8 +711,11 @@ class RelationController extends ControllerBehavior
                 });
             }
             else {
-                $widget->bindEvent('list.extendQueryBefore', function ($query) {
+                $widget->bindEvent('list.extendQueryBefore', function ($query) use ($widget) {
                     $this->relationObject->addDefinedConstraintsToQuery($query);
+                    if ($widget->getSortColumn()) {
+                        $query->getQuery()->orders = [];
+                    }
                 });
             }
 
@@ -849,8 +856,11 @@ class RelationController extends ControllerBehavior
                 });
             }
             else {
-                $widget->bindEvent('list.extendQueryBefore', function ($query) {
+                $widget->bindEvent('list.extendQueryBefore', function ($query) use ($widget) {
                     $this->relationObject->addDefinedConstraintsToQuery($query);
+                    if ($widget->getSortColumn()) {
+                        $query->getQuery()->orders = [];
+                    }
                 });
             }
 
@@ -887,7 +897,6 @@ class RelationController extends ControllerBehavior
          * Form
          */
         elseif ($this->manageMode == 'form') {
-
             if (!$config = $this->makeConfigForMode('manage', 'form', false)) {
                 return null;
             }
@@ -901,10 +910,13 @@ class RelationController extends ControllerBehavior
              * Existing record
              */
             if ($this->manageId) {
-                $config->model = $config->model->find($this->manageId);
-                if (!$config->model) {
+                $model = $config->model->find($this->manageId);
+                if ($model) {
+                    $config->model = $model;
+                } else {
                     throw new ApplicationException(Lang::get('backend::lang.model.not_found', [
-                        'class' => get_class($config->model), 'id' => $this->manageId
+                        'class' => get_class($config->model),
+                        'id' => $this->manageId,
                     ]));
                 }
             }
@@ -950,10 +962,12 @@ class RelationController extends ControllerBehavior
         if ($this->manageId) {
             $hydratedModel = $this->relationObject->where($foreignKeyName, $this->manageId)->first();
 
-            $config->model = $hydratedModel;
-            if (!$config->model) {
+            if ($hydratedModel) {
+                $config->model = $hydratedModel;
+            } else {
                 throw new ApplicationException(Lang::get('backend::lang.model.not_found', [
-                    'class' => get_class($config->model), 'id' => $this->manageId
+                    'class' => get_class($config->model),
+                    'id' => $this->manageId,
                 ]));
             }
         }
@@ -1099,7 +1113,7 @@ class RelationController extends ControllerBehavior
             $this->relationObject->add($newModel, $sessionKey);
         }
         elseif ($this->viewMode == 'single') {
-            $newModel = $this->viewModel;
+            $newModel = $this->manageWidget->model;
             $this->viewWidget->setFormValues($saveData);
 
             /*
@@ -1143,6 +1157,8 @@ class RelationController extends ControllerBehavior
             }
         }
         elseif ($this->viewMode == 'single') {
+            $this->viewModel = $this->manageWidget->model;
+
             $this->viewWidget->setFormValues($saveData);
             $this->viewModel->save(null, $this->manageWidget->getSessionKey());
         }
@@ -1180,6 +1196,9 @@ class RelationController extends ControllerBehavior
                 $relatedModel->delete();
             }
 
+            // Reinitialise the form with a blank model
+            $this->initRelation($this->model);
+
             $this->viewWidget->setFormValues([]);
             $this->viewModel = $this->relationModel;
         }
@@ -1201,7 +1220,6 @@ class RelationController extends ControllerBehavior
          * Add
          */
         if ($this->viewMode == 'multi') {
-
             $checkedIds = $recordId ? [$recordId] : post('checked');
 
             if (is_array($checkedIds)) {
@@ -1217,14 +1235,12 @@ class RelationController extends ControllerBehavior
                     $this->relationObject->add($model, $sessionKey);
                 }
             }
-
         }
         /*
          * Link
          */
         elseif ($this->viewMode == 'single') {
             if ($recordId && ($model = $this->relationModel->find($recordId))) {
-
                 $this->relationObject->add($model, $sessionKey);
                 $this->viewWidget->setFormValues($model->attributes);
 
@@ -1238,7 +1254,6 @@ class RelationController extends ControllerBehavior
                         $parentModel->save();
                     }
                 }
-
             }
         }
 
@@ -1260,7 +1275,6 @@ class RelationController extends ControllerBehavior
          * Remove
          */
         if ($this->viewMode == 'multi') {
-
             $checkedIds = $recordId ? [$recordId] : post('checked');
 
             if (is_array($checkedIds)) {
@@ -1279,6 +1293,12 @@ class RelationController extends ControllerBehavior
             if ($this->relationType == 'belongsTo') {
                 $this->relationObject->dissociate();
                 $this->relationObject->getParent()->save();
+
+                // If the relation manager isn't using deferred binding, reinitialise the form with a blank model
+                if (is_null($sessionKey)) {
+                    $this->model->refresh();
+                    $this->initRelation($this->model);
+                }
             }
             elseif ($this->relationType == 'hasOne' || $this->relationType == 'morphOne') {
                 if ($obj = $relatedModel->find($recordId)) {
@@ -1349,7 +1369,7 @@ class RelationController extends ControllerBehavior
         $this->beforeAjax();
 
         $foreignKeyName = $this->relationModel->getQualifiedKeyName();
-        $hydratedModel = $this->relationObject->where($foreignKeyName, $this->manageId)->first();
+        $hydratedModel = $this->pivotWidget->model;
         $saveData = $this->pivotWidget->getSaveData();
 
         $modelsToSave = $this->prepareModelsToSave($hydratedModel, $saveData);
@@ -1462,39 +1482,81 @@ class RelationController extends ControllerBehavior
 
     /**
      * Determine the default buttons based on the model relationship type.
-     * @return string
+     * @return array|null
      */
     protected function evalToolbarButtons()
     {
         $buttons = $this->getConfig('view[toolbarButtons]');
 
-        if ($buttons === false) {
-            return null;
-        }
-        elseif (is_string($buttons)) {
-            return array_map('trim', explode('|', $buttons));
-        }
-        elseif (is_array($buttons)) {
-            return $buttons;
+        if (!is_array($buttons)) {
+            if ($buttons === false) {
+                return null;
+            } elseif (is_string($buttons)) {
+                $buttons = array_map('trim', explode('|', $buttons));
+            } elseif ($this->manageMode === 'pivot') {
+                $buttons = ['add', 'remove'];
+            } else {
+                switch ($this->relationType) {
+                    case 'hasMany':
+                    case 'morphMany':
+                    case 'morphToMany':
+                    case 'morphedByMany':
+                    case 'belongsToMany':
+                        $buttons = ['create', 'add', 'delete', 'remove'];
+                        break;
+
+                    case 'hasOne':
+                    case 'morphOne':
+                    case 'belongsTo':
+                        $buttons = ['create', 'update', 'link', 'delete', 'unlink'];
+                        break;
+                }
+            }
         }
 
-        if ($this->manageMode == 'pivot') {
-            return ['add', 'remove'];
+        $buttonText = [];
+
+        foreach ($buttons as $type => $text) {
+            if (is_numeric($type) || !$text) {
+                if (is_numeric($type) && $text) {
+                    $type = $text;
+                }
+
+                switch ($type) {
+                    case 'create':
+                        $text = 'backend::lang.relation.create_name';
+                        break;
+
+                    case 'update':
+                        $text = 'backend::lang.relation.update_name';
+                        break;
+
+                    case 'delete':
+                        $text = 'backend::lang.relation.delete';
+                        break;
+
+                    case 'add':
+                        $text = 'backend::lang.relation.add_name';
+                        break;
+
+                    case 'remove':
+                        $text = 'backend::lang.relation.remove';
+                        break;
+
+                    case 'link':
+                        $text = 'backend::lang.relation.link_name';
+                        break;
+
+                    case 'unlink':
+                        $text = 'backend::lang.relation.unlink';
+                        break;
+                }
+            }
+
+            $buttonText[$type] = $text;
         }
 
-        switch ($this->relationType) {
-            case 'hasMany':
-            case 'morphMany':
-            case 'morphToMany':
-            case 'morphedByMany':
-            case 'belongsToMany':
-                return ['create', 'add', 'delete', 'remove'];
-
-            case 'hasOne':
-            case 'morphOne':
-            case 'belongsTo':
-                return ['create', 'update', 'link', 'delete', 'unlink'];
-        }
+        return $buttonText;
     }
 
     /**
@@ -1528,28 +1590,41 @@ class RelationController extends ControllerBehavior
      */
     protected function evalManageTitle()
     {
-        if ($customTitle = $this->getConfig('manage[title]')) {
+        $customTitle = $this->getConfig('manage[title]');
+
+        if (is_string($customTitle)) {
             return $customTitle;
         }
 
+        $customTitles = is_array($customTitle) ? $customTitle : [];
+
         switch ($this->manageMode) {
             case 'pivot':
+                if (array_key_exists('pivot', $customTitles)) {
+                    return $customTitles['pivot'];
+                } elseif ($this->eventTarget === 'button-link') {
+                    return 'backend::lang.relation.link_a_new';
+                }
+
+                return 'backend::lang.relation.add_a_new';
             case 'list':
-                if ($this->eventTarget == 'button-link') {
+                if (array_key_exists('list', $customTitles)) {
+                    return $customTitles['list'];
+                } elseif ($this->eventTarget === 'button-link') {
                     return 'backend::lang.relation.link_a_new';
                 }
 
                 return 'backend::lang.relation.add_a_new';
             case 'form':
-                if ($this->readOnly) {
+                if (array_key_exists('form', $customTitles)) {
+                    return $customTitles['form'];
+                } elseif ($this->readOnly) {
                     return 'backend::lang.relation.preview_name';
-                }
-                elseif ($this->manageId) {
+                } elseif ($this->manageId) {
                     return 'backend::lang.relation.update_name';
                 }
-                else {
-                    return 'backend::lang.relation.create_name';
-                }
+
+                return 'backend::lang.relation.create_name';
         }
     }
 
@@ -1703,7 +1778,8 @@ class RelationController extends ControllerBehavior
      *
      * @return \Backend\Classes\WidgetBase
      */
-    public function relationGetManageWidget() {
+    public function relationGetManageWidget()
+    {
         return $this->manageWidget;
     }
 
@@ -1712,7 +1788,8 @@ class RelationController extends ControllerBehavior
      *
      * @return \Backend\Classes\WidgetBase
      */
-    public function relationGetViewWidget() {
+    public function relationGetViewWidget()
+    {
         return $this->viewWidget;
     }
 }

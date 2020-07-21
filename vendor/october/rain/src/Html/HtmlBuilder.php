@@ -299,7 +299,7 @@ class HtmlBuilder
      *
      * @param  mixed    $key
      * @param  string  $type
-     * @param  string  $value
+     * @param  array  $value
      * @return string
      */
     protected function nestedListing($key, $type, $value)
@@ -340,7 +340,7 @@ class HtmlBuilder
      *
      * @param  string  $key
      * @param  string  $value
-     * @return string
+     * @return string|void
      */
     protected function attributeElement($key, $value)
     {
@@ -379,10 +379,12 @@ class HtmlBuilder
             // the randomly obfuscated letters out of the string on the responses.
             switch (rand(1, 3)) {
                 case 1:
-                    $safe .= '&#'.ord($letter).';'; break;
+                    $safe .= '&#'.ord($letter).';';
+                    break;
 
                 case 2:
-                    $safe .= '&#x'.dechex(ord($letter)).';'; break;
+                    $safe .= '&#x'.dechex(ord($letter)).';';
+                    break;
 
                 case 3:
                     $safe .= $letter;
@@ -449,7 +451,7 @@ class HtmlBuilder
                     $openingTag = array_pop($tags);
                     $result .= $tag;
                 }
-                else if ($tag[strlen($tag) - 2] == '/') {
+                elseif ($tag[strlen($tag) - 2] == '/') {
                     $result .= $tag;
                 }
                 else {
@@ -486,7 +488,7 @@ class HtmlBuilder
             $html = str_replace(['&amp;','&lt;','&gt;'], ['&amp;amp;','&amp;lt;','&amp;gt;'], $html);
             $html = preg_replace('#(&\#*\w+)[\x00-\x20]+;#u', "$1;", $html);
             $html = preg_replace('#(&\#x*)([0-9A-F]+);*#iu', "$1$2;", $html);
-            $html = html_entity_decode($html, ENT_COMPAT, 'UTF-8');
+            $html = html_entity_decode($html, ENT_COMPAT|ENT_HTML5, 'UTF-8');
 
             // Remove any attribute starting with "on" or xmlns
             $html = preg_replace('#(<[^>]+[\x00-\x20\"\'\/])(on|xmlns)[^>]*>#iUu', "$1>", $html);
@@ -510,5 +512,4 @@ class HtmlBuilder
 
         return $html;
     }
-
 }

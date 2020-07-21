@@ -87,7 +87,9 @@ trait ExtendableTrait
              */
             if (substr($useClass, 0, 1) == '@') {
                 $useClass = substr($useClass, 1);
-                if (!class_exists($useClass)) continue;
+                if (!class_exists($useClass)) {
+                    continue;
+                }
             }
 
             $this->extendClassWith($useClass);
@@ -176,6 +178,9 @@ trait ExtendableTrait
      */
     public function addDynamicProperty($dynamicName, $value = null)
     {
+        if (array_key_exists($dynamicName, $this->getDynamicProperties())) {
+            return;
+        }
         self::$extendableGuardProperties = false;
 
         if (!property_exists($this, $dynamicName)) {
@@ -297,7 +302,7 @@ trait ExtendableTrait
     {
         $result = [];
         $propertyNames = $this->extensionData['dynamicProperties'];
-        foreach($propertyNames as $propName) {
+        foreach ($propertyNames as $propName) {
             $result[$propName] = $this->{$propName};
         }
         return $result;
@@ -323,7 +328,7 @@ trait ExtendableTrait
             }
         }
 
-        return false;
+        return array_key_exists($name, $this->getDynamicProperties());
     }
 
     /**
@@ -441,7 +446,6 @@ trait ExtendableTrait
         $className = get_called_class();
 
         if (!array_key_exists($className, self::$extendableStaticMethods)) {
-
             self::$extendableStaticMethods[$className] = [];
 
             $class = new ReflectionClass($className);
@@ -473,7 +477,6 @@ trait ExtendableTrait
                     }
                 }
             }
-
         }
 
         if (isset(self::$extendableStaticMethods[$className][$name])) {

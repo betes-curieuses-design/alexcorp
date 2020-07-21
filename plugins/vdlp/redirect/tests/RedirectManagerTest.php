@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection DuplicatedCode */
+
 declare(strict_types=1);
 
 namespace Vdlp\Redirect\Tests;
@@ -8,25 +10,33 @@ use Carbon\Carbon;
 use Cms;
 use Cms\Classes\Page;
 use Cms\Classes\Theme;
+use Exception;
+use PHPUnit_Framework_AssertionFailedError;
+use PHPUnit_Framework_Exception;
 use PluginTestCase;
+use Vdlp\Redirect\Classes\Exceptions\InvalidScheme;
+use Vdlp\Redirect\Classes\Exceptions\NoMatchForRequest;
 use Vdlp\Redirect\Classes\RedirectManager;
 use Vdlp\Redirect\Classes\RedirectRule;
 use Vdlp\Redirect\Models\Redirect;
+use Vdlp\Redirect\ServiceProvider;
 
-/**
- * Class RedirectManagerTest
- *
- * @package Vdlp\Redirect\Tests
- */
 class RedirectManagerTest extends PluginTestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app->register(ServiceProvider::class);
+    }
+
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
      */
-    public function testExactRedirect()
+    public function testExactRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -47,20 +57,22 @@ class RedirectManagerTest extends PluginTestCase
         $test = '/this-should-be-source';
         $result = $manager->match($test, Redirect::SCHEME_HTTPS);
 
-        self::assertInstanceOf(RedirectRule::class, $result);
         self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
 
         $test = '/this-is-something-totally-different';
-        self::assertEquals(false, $manager->match($test, Redirect::SCHEME_HTTPS));
+
+        $this->expectException(NoMatchForRequest::class);
+
+        $manager->match($test, Redirect::SCHEME_HTTPS);
     }
 
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
      */
-    public function testRedirectWithIgnoreQueryParametersEnabled()
+    public function testRedirectWithIgnoreQueryParametersEnabled(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -82,23 +94,164 @@ class RedirectManagerTest extends PluginTestCase
         $test = '/this-should-be-source?foo=bar';
         $result = $manager->match($test, Redirect::SCHEME_HTTPS);
 
-        self::assertInstanceOf(RedirectRule::class, $result);
         self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
 
         $test = '/this-should-be-source';
         $result = $manager->match($test, Redirect::SCHEME_HTTPS);
 
-        self::assertInstanceOf(RedirectRule::class, $result);
         self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
     }
 
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws PHPUnit_Framework_AssertionFailedError
      */
-    public function testRedirectWithIgnoreQueryParametersDisabled()
+    public function testRedirectWithIgnoreCaseEnabled(): void
+    {
+        $redirect = new Redirect([
+            'match_type' => Redirect::TYPE_EXACT,
+            'target_type' => Redirect::TARGET_TYPE_PATH_URL,
+            'from_url' => '/this-SHOULD-be-source',
+            'from_scheme' => Redirect::SCHEME_AUTO,
+            'to_url' => '/this-should-be-target',
+            'to_scheme' => Redirect::SCHEME_AUTO,
+            'ignore_case' => true,
+            'requirements' => null,
+            'status_code' => 302,
+        ]);
+
+        self::assertTrue($redirect->save());
+
+        $rule = RedirectRule::createWithModel($redirect);
+        $manager = RedirectManager::createWithRule($rule);
+
+        $test = '/ThIs-sHoUlD-bE-sOuRce';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+
+        $test = '/this-SHOULD-be-source';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+    }
+
+    /**
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     */
+    public function testRedirectWithIgnoreCaseEnabledAndQueryParameters(): void
+    {
+        $redirect = new Redirect([
+            'match_type' => Redirect::TYPE_EXACT,
+            'target_type' => Redirect::TARGET_TYPE_PATH_URL,
+            'from_url' => '/this-SHOULD-be-source?PARAM1=lower&param2=HIGHER',
+            'from_scheme' => Redirect::SCHEME_AUTO,
+            'to_url' => '/this-should-be-target',
+            'to_scheme' => Redirect::SCHEME_AUTO,
+            'ignore_query_parameters' => false,
+            'ignore_case' => true,
+            'requirements' => null,
+            'status_code' => 302,
+        ]);
+
+        self::assertTrue($redirect->save());
+
+        $rule = RedirectRule::createWithModel($redirect);
+        $manager = RedirectManager::createWithRule($rule);
+
+        $test = '/ThIs-sHoUlD-bE-sOuRce?param1=LOWER&param2=HIGHER';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+
+        $test = '/this-should-be-SOURCE?param1=lower&param2=higher';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+    }
+
+    /**
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws PHPUnit_Framework_AssertionFailedError
+     */
+    public function testRedirectWithIgnoreTrailingSlashEnabled(): void
+    {
+        $redirect = new Redirect([
+            'match_type' => Redirect::TYPE_EXACT,
+            'target_type' => Redirect::TARGET_TYPE_PATH_URL,
+            'from_url' => '/this-should-be-source',
+            'from_scheme' => Redirect::SCHEME_AUTO,
+            'to_url' => '/this-should-be-target',
+            'to_scheme' => Redirect::SCHEME_AUTO,
+            'ignore_trailing_slash' => true,
+            'requirements' => null,
+            'status_code' => 302,
+        ]);
+
+        self::assertTrue($redirect->save());
+
+        $rule = RedirectRule::createWithModel($redirect);
+        $manager = RedirectManager::createWithRule($rule);
+
+        $test = '/this-should-be-source//';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+    }
+
+    /**
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws PHPUnit_Framework_AssertionFailedError
+     */
+    public function testRedirectWithIgnoreTrailingSlashEnabledAndQueryParameters(): void
+    {
+        $redirect = new Redirect([
+            'match_type' => Redirect::TYPE_EXACT,
+            'target_type' => Redirect::TARGET_TYPE_PATH_URL,
+            'from_url' => '/this-should-be-source?param1=value&param2=value',
+            'from_scheme' => Redirect::SCHEME_AUTO,
+            'to_url' => '/this-should-be-target',
+            'to_scheme' => Redirect::SCHEME_AUTO,
+            'ignore_query_parameters' => false,
+            'ignore_trailing_slash' => true,
+            'requirements' => null,
+            'status_code' => 302,
+        ]);
+
+        self::assertTrue($redirect->save());
+
+        $rule = RedirectRule::createWithModel($redirect);
+        $manager = RedirectManager::createWithRule($rule);
+
+        $test = '/this-should-be-source/?param1=value&param2=value';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+
+        $test = '/this-should-be-source//?param1=value&param2=value';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+
+        $test = '/this-should-be-source//////////////?param1=value&param2=value';
+        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        self::assertEquals(Cms::url('/this-should-be-target'), $manager->getLocation($result));
+    }
+
+    /**
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     */
+    public function testRedirectWithIgnoreQueryParametersDisabled(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -118,7 +271,12 @@ class RedirectManagerTest extends PluginTestCase
         $manager = RedirectManager::createWithRule($rule);
 
         $test = '/this-should-be-source?foo=bar';
-        $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
+        try {
+            $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
 
         self::assertFalse($result);
 
@@ -130,12 +288,12 @@ class RedirectManagerTest extends PluginTestCase
     }
 
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
      */
-    public function testPlaceholderRedirect()
+    public function testPlaceholderRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_PLACEHOLDERS,
@@ -170,32 +328,57 @@ class RedirectManagerTest extends PluginTestCase
         $manager = RedirectManager::createWithRule($rule);
 
         $test = '/blog.php?cat=octobercms&section=test&id=1337';
-        self::assertFalse($manager->match($test, Redirect::SCHEME_HTTPS));
+
+        try {
+            $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
+
+        self::assertFalse($result);
 
         $test = '/blog.php?cat=octobercms&section=test&id=13';
         $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
         self::assertInstanceOf(RedirectRule::class, $result);
         self::assertEquals(Cms::url('/blog/octobercms/test/13'), $manager->getLocation($result));
 
         $test = '/blog.php?cat=wordpress&section=test&id=99';
+
         $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+
         self::assertInstanceOf(RedirectRule::class, $result);
         self::assertEquals(Cms::url('/blog/wordpress/test/99'), $manager->getLocation($result));
 
         $test = '/blog.php?cat=joomla&section=test&id=99';
-        self::assertFalse($manager->match($test, Redirect::SCHEME_HTTPS));
+
+        try {
+            $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
+
+        self::assertFalse($result);
 
         $test = '/blog.php?cat=drupal&section=test&id=e9';
-        self::assertFalse($manager->match($test, Redirect::SCHEME_HTTPS));
+
+        try {
+            $result = $manager->match($test, Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
+
+        self::assertFalse($result);
     }
 
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws Exception
      */
-    public function testTargetCmsPageRedirect()
+    public function testTargetCmsPageRedirect(): void
     {
         $page = Page::load(Theme::getActiveTheme(), 'vdlp-redirect-testpage');
 
@@ -234,11 +417,10 @@ class RedirectManagerTest extends PluginTestCase
     }
 
     /**
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
      */
-    public function testScheduledRedirectPeriod()
+    public function testScheduledRedirectPeriod(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -280,24 +462,32 @@ class RedirectManagerTest extends PluginTestCase
         );
 
         // Test date greater than `to_date`
-        self::assertFalse(
-            $manager->setMatchDate(Carbon::today()->addWeek()->addDay())
-                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS)
-        );
+        try {
+            $result = $manager->setMatchDate(Carbon::today()->addWeek()->addDay())
+                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
+
+        self::assertFalse($result);
 
         // Test date less than `from_date`
-        self::assertFalse(
-            $manager->setMatchDate(Carbon::today()->subDay())
-                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS)
-        );
+        try {
+            $result = $manager->setMatchDate(Carbon::today()->subDay())
+                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
+
+        self::assertFalse($result);
     }
 
     /**
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     * @throws InvalidScheme
      */
-    public function testScheduledRedirectOnlyFromDate()
+    public function testScheduledRedirectOnlyFromDate(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -333,18 +523,22 @@ class RedirectManagerTest extends PluginTestCase
         );
 
         // Test date less than `from_date`
-        self::assertFalse(
-            $manager->setMatchDate(Carbon::today()->addMonth()->subDay())
-                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS)
-        );
+        try {
+            $result = $manager->setMatchDate(Carbon::today()->addMonth()->subDay())
+                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
+
+        self::assertFalse($result);
     }
 
     /**
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \PHPUnit_Framework_Exception
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
+     * @throws InvalidScheme
      */
-    public function testScheduledRedirectOnlyToDate()
+    public function testScheduledRedirectOnlyToDate(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -380,16 +574,17 @@ class RedirectManagerTest extends PluginTestCase
         );
 
         // Test date greater than `to_date`
-        self::assertFalse(
-            $manager->setMatchDate(Carbon::today()->addMonth()->addDay())
-                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS)
-        );
+        try {
+            $result = $manager->setMatchDate(Carbon::today()->addMonth()->addDay())
+                ->match('/this-should-be-source', Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $result = false;
+        }
+
+        self::assertFalse($result);
     }
 
-    /**
-     * @throws Cms\Classes\CmsException
-     */
-    public function testRelativeRedirect()
+    public function testRelativeRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -423,7 +618,7 @@ class RedirectManagerTest extends PluginTestCase
     /**
      * @throws Cms\Classes\CmsException
      */
-    public function testAbsoluteRedirect()
+    public function testAbsoluteRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -454,11 +649,10 @@ class RedirectManagerTest extends PluginTestCase
     }
 
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws InvalidScheme
+     * @throws PHPUnit_Framework_AssertionFailedError
      */
-    public function testSchemeHttpToHttpsRedirect()
+    public function testSchemeHttpToHttpsRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -478,20 +672,25 @@ class RedirectManagerTest extends PluginTestCase
         $manager = RedirectManager::createWithRule($rule);
 
         // This one should not match
-        $rule = $manager->match('/this-should-be-http-source', Redirect::SCHEME_HTTPS);
+        try {
+            $rule = $manager->match('/this-should-be-http-source', Redirect::SCHEME_HTTPS);
+        } catch (NoMatchForRequest $e) {
+            $rule = false;
+        }
 
         self::assertFalse($rule);
 
         // This one should match
-        $rule = $manager->match('/this-should-be-http-source', Redirect::SCHEME_HTTP);
+        try {
+            $rule = $manager->match('/this-should-be-http-source', Redirect::SCHEME_HTTP);
+        } catch (NoMatchForRequest $e) {
+            $rule = false;
+        }
 
         self::assertNotFalse($rule);
 
         // Cms::url() returns http://localhost by default.
         $expectedTargetUrl = Cms::url('/this-should-be-https-target');
-
-        // Make sure that it really returns http://localhost by default.
-        self::assertEquals('http://localhost/this-should-be-https-target', $expectedTargetUrl);
 
         // Now construct the expected target URL.
         $expectedTargetUrl = str_replace('http://', 'https://', $expectedTargetUrl);
@@ -504,11 +703,12 @@ class RedirectManagerTest extends PluginTestCase
     }
 
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @throws PHPUnit_Framework_Exception
      */
-    public function testSchemeHttpsToHttpRedirect()
+    public function testSchemeHttpsToHttpRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -528,20 +728,22 @@ class RedirectManagerTest extends PluginTestCase
         $manager = RedirectManager::createWithRule($rule);
 
         // This one should not match
-        $rule = $manager->match('/this-should-be-https-source', Redirect::SCHEME_HTTP);
+        try {
+            $rule = $manager->match('/this-should-be-https-source', Redirect::SCHEME_HTTP);
+        } catch (NoMatchForRequest $e) {
+            $rule = false;
+        }
 
         self::assertFalse($rule);
 
         // This one should match
         $rule = $manager->match('/this-should-be-https-source', Redirect::SCHEME_HTTPS);
 
-        self::assertNotFalse($rule);
+        self::assertInstanceOf(RedirectRule::class, $rule);
 
         // Cms::url() returns http://localhost by default.
         $expectedTargetUrl = Cms::url('/this-should-be-http-target');
-
-        // Make sure that it really returns http://localhost by default.
-        self::assertEquals('http://localhost/this-should-be-http-target', $expectedTargetUrl);
+        $expectedTargetUrl = str_replace('https', 'http', $expectedTargetUrl);
 
         // Get the actual target URL
         $actualTargetUrl = $manager->getLocation($rule);
@@ -551,11 +753,11 @@ class RedirectManagerTest extends PluginTestCase
     }
 
     /**
-     * @throws Cms\Classes\CmsException
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws PHPUnit_Framework_Exception
      */
-    public function testSchemeAutoToAutoRedirect()
+    public function testSchemeAutoToAutoRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_EXACT,
@@ -577,18 +779,15 @@ class RedirectManagerTest extends PluginTestCase
         // This one should match
         $rule = $manager->match('/this-should-be-auto-source', Redirect::SCHEME_HTTP);
 
-        self::assertNotFalse($rule);
+        self::assertInstanceOf(RedirectRule::class, $rule);
 
         // This one should also match
         $rule = $manager->match('/this-should-be-auto-source', Redirect::SCHEME_HTTPS);
 
-        self::assertNotFalse($rule);
+        self::assertInstanceOf(RedirectRule::class, $rule);
 
         // Cms::url() returns http://localhost by default.
         $expectedTargetUrl = Cms::url('/this-should-be-auto-target');
-
-        // Make sure that it really returns http://localhost by default.
-        self::assertEquals('http://localhost/this-should-be-auto-target', $expectedTargetUrl);
 
         // Get the actual target URL
         $actualTargetUrl = $manager->getLocation($rule);
@@ -598,10 +797,11 @@ class RedirectManagerTest extends PluginTestCase
     }
 
     /**
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     * @throws \Vdlp\Redirect\Classes\Exceptions\InvalidScheme
+     * @throws InvalidScheme
+     * @throws NoMatchForRequest
+     * @throws PHPUnit_Framework_Exception
      */
-    public function testRegularExpressionRedirect()
+    public function testRegularExpressionRedirect(): void
     {
         $redirect = new Redirect([
             'match_type' => Redirect::TYPE_REGEX,
@@ -622,10 +822,10 @@ class RedirectManagerTest extends PluginTestCase
 
         $rule = $manager->match('/file.css', Redirect::SCHEME_HTTP);
 
-        self::assertNotFalse($rule);
+        self::assertInstanceOf(RedirectRule::class, $rule);
 
         $rule = $manager->match('/file.js', Redirect::SCHEME_HTTP);
 
-        self::assertNotFalse($rule);
+        self::assertInstanceOf(RedirectRule::class, $rule);
     }
 }

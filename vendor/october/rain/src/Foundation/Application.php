@@ -66,6 +66,36 @@ class Application extends ApplicationBase
     }
 
     /**
+     * Run the given array of bootstrap classes.
+     *
+     * @param  array  $bootstrappers
+     * @return void
+     */
+    public function bootstrapWith(array $bootstrappers)
+    {
+        $this->hasBeenBootstrapped = true;
+
+        $exceptions = [];
+        foreach ($bootstrappers as $bootstrapper) {
+            $this['events']->fire('bootstrapping: '.$bootstrapper, [$this]);
+
+            // Defer any exceptions until after the application has been
+            // bootstrapped so that the exception handler can run without issues
+            try {
+                $this->make($bootstrapper)->bootstrap($this);
+            } catch (\Exception $ex) {
+                $exceptions[] = $ex;
+            }
+
+            $this['events']->fire('bootstrapped: '.$bootstrapper, [$this]);
+        }
+
+        if (!empty($exceptions)) {
+            throw $exceptions[0];
+        }
+    }
+
+    /**
      * Bind all of the application paths in the container.
      *
      * @return void
@@ -199,7 +229,7 @@ class Application extends ApplicationBase
      */
     public function fatal(Closure $callback)
     {
-        $this->error(function(FatalErrorException $e) use ($callback) {
+        $this->error(function (FatalErrorException $e) use ($callback) {
             return call_user_func($callback, $e);
         });
     }
@@ -281,7 +311,7 @@ class Application extends ApplicationBase
             'router'               => [\Illuminate\Routing\Router::class, \Illuminate\Contracts\Routing\Registrar::class, \Illuminate\Contracts\Routing\BindingRegistrar::class],
             'session'              => [\Illuminate\Session\SessionManager::class],
             'session.store'        => [\Illuminate\Session\Store::class, \Illuminate\Contracts\Session\Session::class],
-            'url'                  => [\Illuminate\Routing\UrlGenerator::class, \Illuminate\Contracts\Routing\UrlGenerator::class],
+            'url'                  => [\October\Rain\Router\UrlGenerator::class, \Illuminate\Contracts\Routing\UrlGenerator::class],
             'validator'            => [\Illuminate\Validation\Factory::class, \Illuminate\Contracts\Validation\Factory::class],
             'view'                 => [\Illuminate\View\Factory::class, \Illuminate\Contracts\View\Factory::class],
         ];

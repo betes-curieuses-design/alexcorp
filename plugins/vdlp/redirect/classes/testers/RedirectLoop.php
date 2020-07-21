@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Vdlp\Redirect\Classes\Testers;
 
+use InvalidArgumentException;
 use Vdlp\Redirect\Classes\TesterBase;
 use Vdlp\Redirect\Classes\TesterResult;
 
-/**
- * Class RedirectLoop
- *
- * @package Vdlp\Redirect\Classes\Testers
- */
-class RedirectLoop extends TesterBase
+final class RedirectLoop extends TesterBase
 {
     /**
-     * {@inheritDoc}
+     * @throws InvalidArgumentException
      */
     protected function test(): TesterResult
     {
@@ -29,12 +25,12 @@ class RedirectLoop extends TesterBase
 
         if (curl_exec($curlHandle) === false
             && curl_errno($curlHandle) === CURLE_TOO_MANY_REDIRECTS) {
-            $error = trans('vdlp.redirect::lang.test_lab.possible_loop');
+            $error = e(trans('vdlp.redirect::lang.test_lab.possible_loop'));
         }
 
         curl_close($curlHandle);
 
-        $message = $error ?? trans('vdlp.redirect::lang.test_lab.no_loop');
+        $message = $error ?? e(trans('vdlp.redirect::lang.test_lab.no_loop'));
 
         return new TesterResult($error === null, $message);
     }

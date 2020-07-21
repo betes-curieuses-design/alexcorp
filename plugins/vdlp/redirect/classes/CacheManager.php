@@ -4,173 +4,136 @@ declare(strict_types=1);
 
 namespace Vdlp\Redirect\Classes;
 
-use BadMethodCallException;
-use Cache;
 use Carbon\Carbon;
-use Illuminate\Cache\TaggedCache;
-use October\Rain\Support\Traits\Singleton;
+use Illuminate\Contracts\Cache\Repository;
+use Psr\Log\LoggerInterface;
+use Throwable;
+use Vdlp\Redirect\Classes\Contracts\CacheManagerInterface;
 use Vdlp\Redirect\Models\Settings;
 
-/**
- * Class CacheManager
- *
- * Wrapper class for managing redirect cache.
- *
- * @package Vdlp\Redirect\Classes
- */
-class CacheManager
+final class CacheManager implements CacheManagerInterface
 {
-    use Singleton;
-
-    const CACHE_TAG = 'Vdlp.Redirect';
+    private const CACHE_TAG = 'vdlp_redirect';
+    private const CACHE_TAG_RULES = 'vdlp_redirect_rules';
+    private const CACHE_TAG_MATCHES = 'vdlp_redirect_matches';
 
     /**
-     * @var TaggedCache
+     * @var Repository
      */
     private $cache;
 
     /**
-     * {@inheritDoc}
-     * @throws BadMethodCallException
+     * @var LoggerInterface
      */
-    protected function init()//: void
+    private $log;
+
+    public function __construct(Repository $cache, LoggerInterface $log)
     {
-        $this->cache = Cache::tags([static::CACHE_TAG]);
+        $this->cache = $cache;
+        $this->log = $log;
     }
 
-    /**
-     * Get item from cache storage.
-     *
-     * @param string $cacheKey
-     * @return mixed
-     */
-    public function get($cacheKey)
+    public function get(string $key)
     {
-        return $this->cache->get($cacheKey);
+        return $this->cache->tags(self::CACHE_TAG_MATCHES)
+            ->get($key);
     }
 
-    /**
-     * @param $cacheKey
-     * @return bool
-     */
-    public function forget($cacheKey): bool
+    public function forget(string $key): bool
     {
-        return $this->cache->forget($cacheKey);
+        return $this->cache->tags(self::CACHE_TAG_MATCHES)
+            ->forget($key);
     }
 
-    /**
-     * Checks if items resists in cache storage.
-     *
-     * @param string $cacheKey
-     * @return bool
-     */
-    public function has($cacheKey): bool
+    public function has(string $key): bool
     {
-        return $this->cache->has($cacheKey);
+        return $this->cache->tags(self::CACHE_TAG_MATCHES)
+            ->has($key);
     }
 
-    /**
-     * Generate proper cache key.
-     *
-     * Most caching backend have no limits on key lengths.
-     * But to be sure I chose to MD5 hash the cache key.
-     *
-     * @param string $requestPath
-     * @param string $scheme
-     * @return string
-     */
-    public function cacheKey($requestPath, $scheme): string
+    public function cacheKey(string $requestPath, string $scheme): string
     {
+        // Most caching backend have no limits on key lengths.
+        // But to be sure I chose to MD5 hash the cache key.
         return md5($requestPath . $scheme);
     }
 
-    /**
-     * Clears redirect cache.
-     *
-     * @return void
-     */
-    public function flush()//: void
+    public function flush(): void
     {
-        $this->cache->flush();
+        $this->cache->tags([self::CACHE_TAG, self::CACHE_TAG_RULES, self::CACHE_TAG_MATCHES])
+            ->flush();
+
+        if ((bool) config('vdlp.redirect::log_redirect_changes', false) === true) {
+            $this->log->info('Vdlp.Redirect: Redirect cache has been flushed.');
+        }
     }
 
-    /**
-     * @param array $redirectRules
-     * @return void
-     */
-    public function putRedirectRules(array $redirectRules)
+    public function putRedirectRules(array $redirectRules): void
     {
-        $this->cache->forever('Vdlp.Redirect.Rules', $redirectRules);
+        $this->cache->tags(self::CACHE_TAG_RULES)
+            ->forever('rules', $redirectRules);
     }
 
-    /**
-     * @return array
-     */
     public function getRedirectRules(): array
     {
-        return (array) $this->cache->get('Vdlp.Redirect.Rules', []);
-    }
+        $data = $this->cache->tags(self::CACHE_TAG_RULES)
+            ->get('rules', []);
 
-    /**
-     * Put matched rule or FALSE to cache.
-     *
-     * @param string $cacheKey
-     * @param RedirectRule|false $matchedRuleOrFalse
-     * @return RedirectRule|false
-     */
-    public function putMatch($cacheKey, $matchedRuleOrFalse)
-    {
-        if ($matchedRuleOrFalse === false) {
-            $this->cache->forever($cacheKey, false);
-            return false;
+        if (is_array($data)) {
+            return $data;
         }
 
-        $matchedRuleToDate = $matchedRuleOrFalse->getToDate();
+        return [];
+    }
+
+    public function putMatch(string $cacheKey, ?RedirectRule $matchedRule = null): ?RedirectRule
+    {
+        if ($matchedRule === null) {
+            $this->cache->tags(self::CACHE_TAG_MATCHES)
+                ->forever($cacheKey, false);
+
+            return null;
+        }
+
+        $matchedRuleToDate = $matchedRule->getToDate();
 
         if ($matchedRuleToDate instanceof Carbon) {
             $minutes = $matchedRuleToDate->diffInMinutes(Carbon::now());
-            $this->cache->put($cacheKey, $matchedRuleOrFalse, $minutes);
+
+            $this->cache->tags(self::CACHE_TAG_MATCHES)
+                ->put($cacheKey, $matchedRule, $minutes);
         } else {
-            $this->cache->forever($cacheKey, $matchedRuleOrFalse);
+            $this->cache->tags(self::CACHE_TAG_MATCHES)
+                ->forever($cacheKey, $matchedRule);
         }
 
-        return $matchedRuleOrFalse;
+        return $matchedRule;
     }
 
-    /**
-     * The user has enabled the cache and the current driver supports cache tags.
-     *
-     * @return bool
-     */
-    public static function cachingEnabledAndSupported(): bool
+    public function cachingEnabledAndSupported(): bool
     {
         if (!Settings::isCachingEnabled()) {
             return false;
         }
 
         try {
-            Cache::tags([static::CACHE_TAG]);
-        } catch (BadMethodCallException $e) {
+            $this->cache->tags(self::CACHE_TAG);
+        } catch (Throwable $e) {
             return false;
         }
 
         return true;
     }
 
-    /**
-     * The user has enabled the cache, but the current driver does not support cache tags.
-     *
-     * @return bool
-     */
-    public static function cachingEnabledButNotSupported(): bool
+    public function cachingEnabledButNotSupported(): bool
     {
         if (!Settings::isCachingEnabled()) {
             return false;
         }
 
         try {
-            Cache::tags([static::CACHE_TAG]);
-        } catch (BadMethodCallException $e) {
+            $this->cache->tags(self::CACHE_TAG);
+        } catch (Throwable $e) {
             return true;
         }
 

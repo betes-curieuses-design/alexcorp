@@ -30,6 +30,8 @@ return [
         'caching_enabled_comment' => 'Verbetert het redirect mechanisme als er veel redirects zijn. '
             . 'LET OP: Cache driver `file` en `database` zijn NIET ondersteund. '
             . 'Aanbevolen driver is `memcached` of een vergelijkbare "in-memory" caching driver.',
+        'relative_paths_enabled_label' => 'Relatieve paden gebruiken',
+        'relative_paths_enabled_command' => 'Het redirect mechanisme zal relatieve paden gebruiken i.p.v. absolute paden.',
     ],
     'redirect' => [
         'redirect' => 'Redirect',
@@ -105,6 +107,12 @@ return [
         'sparkline_30d' => 'Treffers (30d)',
         'has_hits' => 'Heeft treffers',
         'minimum_hits' => 'Minimum treffers',
+        'ignore_query_parameters' => 'Negeer query parameters',
+        'ignore_query_parameters_comment' => 'Het matching-algoritme negeert aanwezige query parameters.',
+        'ignore_case' => 'Niet hoofdlettergevoelig',
+        'ignore_case_comment' => 'Het matching-algoritme is niet hoofdlettergevoelig.',
+        'ignore_trailing_slash' => 'Negeer slashes aan het einde van het bronpad.',
+        'ignore_trailing_slash_comment' => '',
         'last_used_at' => 'Laatste treffer',
         'updated_at' => 'Bijgewerkt op',
         'invalid_regex' => 'Ongeldige reguliere expressie.',
@@ -116,12 +124,12 @@ return [
     ],
     'scheduling' => [
         'from_date' => 'Beschikbaar van',
-        'from_date_comment' => 'De datum wanneer deze redirect actief wordt mag weggelaten worden.',
+        'from_date_comment' => '',
         'to_date' => 'Beschikbaar tot',
-        'to_date_comment' => 'De datum tot wanneer deze redirect actief is mag weggelaten worden.',
+        'to_date_comment' => '',
         'scheduling_comment' => 'Hier kan een periode ingegeven worden wanneer de redirect beschikbaar is. '
             . 'Alle combinatie data zijn mogelijk.',
-        'not_active_warning' => 'Redirect is not available anymore, please check \'Scheduling\' tab.',
+        'not_active_warning' => 'Deze redirect valt buiten het gestelde tijdschema. Controleer instellingen onder tabblad \'Tijdschema\'.',
     ],
     'test' => [
         'test_comment' => 'Test uw redirect voordat u deze opslaat.',
@@ -144,16 +152,16 @@ return [
         'test_lab_path_label' => 'Test pad',
         'test_lab_path_comment' => 'Dit pad zal gebruikt worden wanneer test worden uitgevoerd. '
             . 'Vervang placeholders met echt waardes.',
-        'start_tests' => 'Start testen',
-        'start_tests_description' => 'Klik de \'Start Testen\' button om te beginnen.',
+        'start_tests' => 'Start tests',
+        'start_tests_description' => 'Klik de \'Start Tests\' button om te beginnen.',
         'edit' => 'Bewerk',
         'exclude' => 'Sluit uit',
         'exclude_confirm' => 'Weet u zeker dat u deze redirect wilt uitsluiten in het TestLab?',
         'exclude_indicator' => 'Redirect uitsluiten in het TestLab',
         're_run' => 'Opnieuw',
-        're_run_indicator' => 'Testen aan het uitvoeren, wacht uw even...',
+        're_run_indicator' => 'Tests aan het uitvoeren, even geduld...',
         'loop' => 'Lus',
-        'match' => 'Overeenkomst',
+        'match' => 'Match',
         'response_http_code' => 'Response HTTP code',
         'response_http_code_should_be' => 'Response HTTP code zou een van de volgende moeten zijn:',
         'redirect_count' => 'Redirect aantal',
@@ -172,10 +180,10 @@ return [
         'no_loop' => 'Geen redirect lus gedetecteerd.',
         'not_match_redirect' => 'Komt niet overeen met een redirect.',
         'matched' => 'Overeenkomstig',
-        'redirect' => 'verwijs',
-        'matched_not_http_code' => 'Redirect komt overeen maar de HTTP response code komt niet overeen! '
+        'redirect' => 'redirect',
+        'matched_not_http_code' => 'Redirect komt overeen, maar de HTTP antwoord code komt niet overeen! '
             . 'Verwachte :expected maar ontving :received.',
-        'matched_http_code' => 'Overeenkomstige redirect, response HTTP code :code.',
+        'matched_http_code' => 'Overeenkomstig redirect, antwoord HTTP code :code.',
         'executing_tests' => 'Uitvoeren tests...',
     ],
     'statistics' => [
@@ -202,15 +210,15 @@ return [
         'categories' => 'Beheer categorieën',
         'create_category' => 'Maak category',
         'edit_category' => 'Bewerk category',
-        'view_redirect_log' => 'Toon redirect log',
+        'view_redirect_log' => 'Logboek',
         'statistics' => 'Statistieken',
         'test_lab' => 'TestLab (beta)',
     ],
     'buttons' => [
-        'add' => 'Toevoegen', // since 2.0.3
-        'from_request_log' => 'Van aanvraag log', // since 2.0.3
-        'new_redirect' => 'Nieuwe redirect', // changed since 2.0.3
-        'create_redirects' => 'Maak redirects', // since 2.0.3
+        'add' => 'Toevoegen',
+        'from_request_log' => 'Van aanvraag log',
+        'new_redirect' => 'Nieuwe redirect',
+        'create_redirects' => 'Maak redirects',
         'create_redirect' => 'Maak redirect',
         'create_and_new' => 'Maken en nieuw',
         'delete' => 'Verwijderen',
@@ -220,11 +228,12 @@ return [
         'export' => 'Uitvoer',
         'import' => 'Invoer',
         'settings' => 'Instellingen',
+        'extensions' => 'Extensies',
         'categories' => 'Categorieën',
         'new_category' => 'Nieuwe category',
         'reset_statistics' => 'Herstel statistieken',
-        'logs' => 'Redirect log',
-        'empty_redirect_log' => 'Leeg redirect log',
+        'logs' => 'Logboek',
+        'empty_redirect_log' => 'Leeg logboek',
         'clear_cache' => 'Leeg cache',
         'stop' => 'Stop',
         'reset_all' => 'Alle statistische informatie wissen',
@@ -238,6 +247,7 @@ return [
         'tab_scheduling' => 'Tijdschema',
         'tab_test_lab' => 'TestLab',
         'tab_advanced' => 'Geavanceerd',
+        'tab_logs' => 'Logboek',
     ],
     'flash' => [
         'success_created_redirects' => 'Er zijn :count redirect(s) gecreëerd', // since 2.0.3
@@ -268,6 +278,9 @@ return [
         'to_date' => 'Scheduled date to [to_date] (YYYY-MM-DD of leeg)',
         'sort_order' => 'Priority [sort_order]',
         'is_enabled' => 'Enabled [is_enabled] (1 = enable redirect, 0 = disable redirect [standaard])',
+        'ignore_query_parameters' => 'Ignore Query Parameters [ignore_query_parameters] (1 = yes, 0 = no [default])',
+        'ignore_case' => 'Ignore Case [ignore_case] (1 = yes, 0 = no [default])',
+        'ignore_trailing_slash' => 'Ignore Trailing Slashes [ignore_trailing_slash] (1 = yes, 0 = no [default])',
         'test_lab' => 'Test Lab [test_lab] (1 = enable Test Lab, 0 = disable TestLab [standaard])',
         'test_lab_path' => 'Test Lab path [test_lab_path] (verplicht als match_type = placeholders)',
         'system' => 'System [system] (1 = system generated redirect, 0 = user generated redirect [standaard])',

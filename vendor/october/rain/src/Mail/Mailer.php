@@ -66,6 +66,10 @@ class Mailer extends MailerBase
 
         $data['message'] = $message = $this->createMessage();
 
+        if ($callback !== null) {
+            call_user_func($callback, $message);
+        }
+
         if (is_bool($raw) && $raw === true) {
             $this->addContentRaw($message, $view, $plain);
         }
@@ -73,10 +77,6 @@ class Mailer extends MailerBase
             $this->addContent($message, $view, $plain, $raw, $data);
         }
 
-        if ($callback !== null) {
-            call_user_func($callback, $message);
-        }
-        
         if (isset($this->to['address'])) {
             $this->setGlobalTo($message);
         }
@@ -167,7 +167,7 @@ class Mailer extends MailerBase
         $method = $queue === true ? 'queue' : 'send';
         $recipients = $this->processRecipients($recipients);
 
-        return $this->{$method}($view, $data, function($message) use ($recipients, $callback, $bcc) {
+        return $this->{$method}($view, $data, function ($message) use ($recipients, $callback, $bcc) {
 
             $method = $bcc === true ? 'bcc' : 'to';
 
@@ -193,7 +193,8 @@ class Mailer extends MailerBase
     public function queue($view, $data = null, $callback = null, $queue = null)
     {
         if (!$view instanceof MailableContract) {
-            $mailable = $this->buildQueueMailable($view, $data, $callback);
+            $mailable = $this->buildQueueMailable($view, $data, $callback, $queue);
+            $queue = null;
         }
         else {
             $mailable = $view;
@@ -230,7 +231,8 @@ class Mailer extends MailerBase
     public function later($delay, $view, $data = null, $callback = null, $queue = null)
     {
         if (!$view instanceof MailableContract) {
-            $mailable = $this->buildQueueMailable($view, $data, $callback);
+            $mailable = $this->buildQueueMailable($view, $data, $callback, $queue);
+            $queue = null;
         }
         else {
             $mailable = $view;
@@ -261,9 +263,13 @@ class Mailer extends MailerBase
      * @param  mixed  $callback
      * @return mixed
      */
-    protected function buildQueueMailable($view, $data, $callback)
+    protected function buildQueueMailable($view, $data, $callback, $queueName = null)
     {
         $mailable = new Mailable;
+
+        if (!empty($queueName)) {
+            $mailable->queue = $queueName;
+        }
 
         $mailable->view($view)->withSerializedData($data);
 

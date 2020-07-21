@@ -214,7 +214,7 @@ class BelongsToMany extends BelongsToManyBase
             $sessionKey = null;
         }
 
-        if ($sessionKey === null) {
+        if ($sessionKey === null || $sessionKey === false) {
             $this->attach($model->getKey(), $pivotData);
             $this->parent->reloadRelations($this->relationName);
         }
@@ -297,7 +297,7 @@ class BelongsToMany extends BelongsToManyBase
             $this->parent->setRelation($this->relationName, $relationModel->newCollection());
 
             // Perform sync when the model is saved
-            $this->parent->bindEventOnce('model.afterSave', function() use ($value) {
+            $this->parent->bindEventOnce('model.afterSave', function () use ($value) {
                 $this->detach();
             });
             return;
@@ -317,7 +317,10 @@ class BelongsToMany extends BelongsToManyBase
             }
         }
 
-        if (!is_array($value)) {
+        /*
+         * Convert scalar to array
+         */
+        if (!is_array($value) && !$value instanceof CollectionBase) {
             $value = [$value];
         }
 
@@ -332,7 +335,7 @@ class BelongsToMany extends BelongsToManyBase
         $this->parent->setRelation($this->relationName, $relationCollection);
 
         // Perform sync when the model is saved
-        $this->parent->bindEventOnce('model.afterSave', function() use ($value) {
+        $this->parent->bindEventOnce('model.afterSave', function () use ($value) {
             $this->sync($value);
         });
     }

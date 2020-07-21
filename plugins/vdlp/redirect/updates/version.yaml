@@ -38,3 +38,40 @@
     - "This fixes an issue where redirects will fail to work when the redirects.csv file does not have the write permission -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/1.10.1"
 1.10.2:
     - "Fixes a fatal error when running TestLab -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/1.10.2"
+1.10.3:
+    - "Fix support for Postgres -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/1.10.3"
+1.10.4:
+    - "Fixes reported issues #41 and #43 -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/1.10.4"
+1.10.5:
+    - "Fixes reported issues #46 and #49 -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/1.10.5"
+2.0.0:
+    - "Supports PHP 7.1.3 and higher. Read CHANGELOG.md -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.0.0"
+2.0.1:
+    - "Fix Middleware not being invoked in newer PHP versions -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.0.1"
+2.0.2:
+    - "Minor database and configuration fixes -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.0.2"
+    - 20200408_0008_change_column_types_from_char_to_varchar.php
+2.1.0:
+    - "Added support for October CMS L6 build, improved caching and more -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.1.0"
+2.1.1:
+    - "Update CHANGELOG"
+2.2.0:
+    - "Add cache control header and UI improvements -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.2.0"
+2.3.0:
+    - "Add new redirect options (ignore case and ignore trailing slash) -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.3.0"
+    - 20200414_0009_add_ignore_case_to_redirects_table.php
+    - 20200414_0010_add_ignore_trailing_slash_to_redirects_table.php
+2.3.1:
+    - "Fix SQLSTATE[42S22] error when installing plugin -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.3.1"
+2.3.2:
+    - "Improve error handling in plugin migration process -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.3.2"
+2.4.0:
+    - "Skip requests with header 'X-Requested-With: XMLHttpRequest' -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.4.0"
+2.4.1:
+    - "Add Redirect Extensions promo page -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.4.1"
+2.5.0:
+    - "Add support for using relative paths -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.5.0"
+2.5.1:
+    - "Fixes issues with redirect rules file not being present -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.5.1"
+2.5.2:
+    - "Fix bug that causes re-writing the redirect rules file when hits are updated -- See: https://github.com/vdlp/oc-redirect-plugin/releases/tag/2.5.2"
